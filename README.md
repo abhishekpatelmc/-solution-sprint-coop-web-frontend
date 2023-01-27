@@ -1,27 +1,30 @@
-# Create T3 App
+# Lancer's View
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Lancer's View is a review website for the University of Windsor students and alumni to share their experiences and perspectives about companies and interview insights. The website allows users to search for companies and read reviews from other students and alumni, and also to write their own reviews to help future students and alumni make informed decisions about their career paths.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Search function to easily find companies and reviews
+- User-generated reviews and ratings for companies
+- Interview process information and tips from alumni
+- Company information and job opportunities
+- A platform for students and alumni to connect and network
+- A user-friendly interface for easy navigation
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Getting Started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Tailwind CSS](https://tailwindcss.com)
+1. Fork or clone the repository: `https://github.com/abhishekpatelmc/LancersView-frontend.git`
+2. Install the dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Open http://localhost:3000 to view the application in your browser
 
+## Built With
 
-## Learn More
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Our valuable Contributors👩‍💻👨‍💻 :
+<a href="https://github.com/abhishekpatelmc/LancersView-frontend/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=abhishekpatelmc/LancersView-frontend" />
+</a>
