@@ -58,6 +58,7 @@ const Home: NextPage = () => {
         <div className="mx-10 my-10 flex space-x-4">
           {companies.map((company) => (
             <div
+              key={company.name}
               className={`flex h-20 w-36 items-center justify-center rounded-xl p-2 text-lg  text-gray-100 shadow-xl ${company.color}`}
             >
               {company.name}
@@ -66,7 +67,10 @@ const Home: NextPage = () => {
         </div>
         <div className="mx-10 space-y-4">
           {reviews.map((review) => (
-            <div className="w-8/12 rounded-xl border border-gray-100 p-4 pl-4 shadow-lg">
+            <div
+              key={review.name}
+              className="w-8/12 rounded-xl border border-gray-100 p-4 pl-4 shadow-lg"
+            >
               <div className="space-x-2">
                 <span className="text-lg font-semibold">{review.name}</span>
                 <span>{review.position}</span>
