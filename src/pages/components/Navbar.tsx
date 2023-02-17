@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
@@ -31,7 +32,7 @@ const Navbar = () => {
               </li>
 
               <li>
-                <a href="#">
+                <Link href="/login">
                   <Image
                     quality={100}
                     width={30}
@@ -39,7 +40,7 @@ const Navbar = () => {
                     src="/icons/user.png"
                     alt="user"
                   />
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
