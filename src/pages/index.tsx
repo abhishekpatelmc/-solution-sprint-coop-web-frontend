@@ -43,16 +43,25 @@ const Home: NextPage = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/companies`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCompData(data);
-      });
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews`)
-      .then((res) => res.json())
-      .then((data) => {
-        setReviews(data);
-      });
+    if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/companies`)
+        .then((res) => res.json())
+        .then((data: Company[]) => {
+          setCompData(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews`)
+        .then((res) => res.json())
+        .then((data: Review[]) => {
+          setReviews(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   // console.log(companyData);
