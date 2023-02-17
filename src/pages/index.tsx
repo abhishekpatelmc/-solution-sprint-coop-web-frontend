@@ -1,57 +1,74 @@
 import { type NextPage } from "next";
+import Image from "next/image";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 
 const Home: NextPage = () => {
-  // useEffect(() => {
-  //   const res = fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/companies`)
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // }, []);
+  const [companyData, setCompData] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<any[]>([]);
 
-  const companies = [
-    { name: "RBC", color: "bg-blue-300" },
-    { name: "TD", color: "bg-green-500" },
-    { name: "BMO", color: "bg-blue-500" },
-    { name: "CIBC", color: "bg-red-500" },
-    { name: "Scotiabank", color: "bg-yellow-500" },
-    { name: "BlacBerry", color: "bg-slate-800" },
-    { name: "Nokia", color: "bg-blue-400" },
-    { name: "Rogers", color: "bg-red-400" },
-    { name: "Telus", color: "bg-green-400" },
-  ];
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/companies`)
+      .then((res) => res.json())
+      .then((data) => {
+        setCompData(data);
+      });
+  }, []);
 
-  const reviews = [
-    {
-      name: "John Doe",
-      position: "Software Engineer",
-      company: "RBC",
-      review:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      name: "Alex Doe",
-      position: "Software Developer",
-      company: "TD",
-      review:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      name: "bob green",
-      position: "AI Engineer",
-      company: "BMO",
-      review:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      name: "Alana gorgeous",
-      position: "Data Scientist",
-      company: "CIBC",
-      review:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur",
-    },
-  ];
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews`)
+      .then((res) => res.json())
+      .then((data) => {
+        setReviews(data);
+      });
+  }, []);
+
+  // console.log(companyData);
+  console.log(reviews);
+
+  // const companies = [
+  //   { name: "RBC", color: "bg-blue-300" },
+  //   { name: "TD", color: "bg-green-500" },
+  //   { name: "BMO", color: "bg-blue-500" },
+  //   { name: "CIBC", color: "bg-red-500" },
+  //   { name: "Scotiabank", color: "bg-yellow-500" },
+  //   { name: "BlacBerry", color: "bg-slate-800" },
+  //   { name: "Nokia", color: "bg-blue-400" },
+  //   { name: "Rogers", color: "bg-red-400" },
+  //   { name: "Telus", color: "bg-green-400" },
+  // ];
+
+  // const reviews = [
+  //   {
+  //     name: "John Doe",
+  //     position: "Software Engineer",
+  //     company: "RBC",
+  //     review:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur",
+  //   },
+  //   {
+  //     name: "Alex Doe",
+  //     position: "Software Developer",
+  //     company: "TD",
+  //     review:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur",
+  //   },
+  //   {
+  //     name: "bob green",
+  //     position: "AI Engineer",
+  //     company: "BMO",
+  //     review:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur",
+  //   },
+  //   {
+  //     name: "Alana gorgeous",
+  //     position: "Data Scientist",
+  //     company: "CIBC",
+  //     review:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur",
+  //   },
+  // ];
 
   return (
     <>
@@ -63,27 +80,42 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <div className="mx-10 my-10 flex space-x-4">
-          {companies.map((company) => (
+          {companyData.map((company) => (
             <div
-              key={company.name}
-              className={`flex h-20 w-36 items-center justify-center rounded-xl p-2 text-lg  text-gray-100 shadow-xl ${company.color}`}
+              key={company.company_name}
+              className={
+                "flex h-32  w-1/6 items-center justify-evenly  rounded-xl bg-gradient-to-t p-3	text-base text-gray-600 shadow-xl"
+              }
             >
-              {company.name}
+              <Image
+                src={company.logo_image_url}
+                // width={60}
+                // height={52}
+                alt={""}
+                width="0"
+                height="0"
+                sizes="100vw"
+                className="h-auto w-3/6"
+              />
+              <div className="p-4">{company.company_name}</div>
             </div>
           ))}
         </div>
         <div className="mx-10 space-y-4">
           {reviews.map((review) => (
             <div
-              key={review.name}
+              key={review._id}
               className="w-8/12 rounded-xl border border-gray-100 p-4 pl-4 shadow-lg"
             >
               <div className="space-x-2">
-                <span className="text-lg font-semibold">{review.name}</span>
-                <span>{review.position}</span>
-                <span>{review.company}</span>
+                <span className="text-lg font-semibold">
+                  Anonoumous
+                  {/* {review.user_id} */}
+                </span>
+                <span>{review.job_title}</span>
+                {/* <span>{review.company}</span> */}
               </div>
-              <div className="text-gray-500">{review.review}</div>
+              <div className="text-gray-500">{review.review.desc}</div>
             </div>
           ))}
         </div>
