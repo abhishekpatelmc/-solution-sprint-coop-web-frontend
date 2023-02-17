@@ -4,9 +4,43 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 
+type Company = {
+  _id: string;
+  company_name: string;
+  location: string;
+  website: string;
+  logo_image_url: string;
+  review_count: number;
+  interview_count: number;
+  difficult_rating: number;
+  acceptance_rate: number;
+  offer_count: number;
+  common_job_posts: string[];
+};
+
+type ReviewDesc = {
+  desc: string;
+  questions: string[];
+  _id: string;
+};
+
+type Review = {
+  _id: string;
+  user_id: string;
+  company_id: string;
+  job_title: string;
+  interview_date: string;
+  review: ReviewDesc;
+  positive_flag: boolean;
+  job_offer_flag: boolean;
+  difficulty_rating: number;
+  created_date: string;
+  modified_date: string;
+};
+
 const Home: NextPage = () => {
-  const [companyData, setCompData] = useState<any[]>([]);
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [companyData, setCompData] = useState<Company[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/companies`)
@@ -14,9 +48,6 @@ const Home: NextPage = () => {
       .then((data) => {
         setCompData(data);
       });
-  }, []);
-
-  useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews`)
       .then((res) => res.json())
       .then((data) => {
@@ -25,7 +56,7 @@ const Home: NextPage = () => {
   }, []);
 
   // console.log(companyData);
-  console.log(reviews);
+  // console.log(reviews);
 
   // const companies = [
   //   { name: "RBC", color: "bg-blue-300" },
