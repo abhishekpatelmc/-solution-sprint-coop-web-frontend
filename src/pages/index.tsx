@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 
 const Home: NextPage = () => {
-  useEffect(() => {
-    const res = fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/companies`)
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, []);
+  // useEffect(() => {
+  //   const res = fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/companies`)
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data));
+  // }, []);
 
   const companies = [
     { name: "RBC", color: "bg-blue-300" },
