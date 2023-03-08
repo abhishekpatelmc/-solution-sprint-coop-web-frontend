@@ -7,6 +7,11 @@ module.exports = {
       "mma.prnewswire.com",
       "upload.wikimedia.org",
       "www.unepfi.org",
+      "logos-world.net",
+      "skywindowsltd.com",
+      "1000logos.net",
+      "pbs.twimg.com"
+
     ],
   },
 };
