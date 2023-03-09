@@ -1,8 +1,42 @@
-import React from "react";
-import Navbar from "../components/Navbar";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import { SlLike, SlDislike } from "react-icons/sl";
+import Navbar from "../components/Navbar";
+import { Company, Interview } from "../../types";
+
+
 
 const index = () => {
+  const router = useRouter();
+  const query = router.query;
+  var companyId = query.company_id;
+
+  const [company, setCompany] = useState<Company>();
+  const [interviews, setInterviews] = useState<Interview[]>([]);
+
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/company/${companyId}`)
+        .then((res) => res.json())
+        .then((data: Company) => {
+          setCompany(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews/${companyId}`)
+        .then((res) => res.json())
+        .then((data: Interview[]) => {
+          setInterviews(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
   const options = [
     {
       name: "RBC",
@@ -36,21 +70,21 @@ const index = () => {
         <div className="basis-1/4">
           {/* Inner div with options */}
           <div className="mt-5 flex-col space-y-4 rounded-xl border-2 p-4">
-            <div className="rounded-xl border-2 p-2">Logo</div>
-            <div className="rounded-xl border-2 p-2">Overview</div>
+            <div className="rounded-xl border-2 p-2">{company?.company_name}</div>
+            <div className="rounded-xl border-2 p-2"></div>
             <div className="rounded-xl border-2 p-2">Reviews</div>
             <div className="rounded-xl border-2 p-2">Intervies</div>
           </div>
         </div>
         {/* Middle div */}
-        <div className="basis-1/2 space-y-5 p-5">
+        <div className="basis-3/4 space-y-5 p-5">
           {/* Inner div with options */}
-          {options.map((option) => (
-            <div key={option.name} className="rounded-xl border-2 p-4">
+          {interviews.map((interview) => (
+            <div key={interview.title} className="rounded-xl border-2 p-4">
               <h1 className="text-lg font-medium tracking-wide">
-                {option.name}
+                {interview.title}
               </h1>
-              <p className="text-sm">{option.Review}</p>
+              <p className="text-sm">{interview.review.desc}</p>
               {/* like and dislike button */}
               <div className="mt-4 flex items-end space-x-5 text-lg ">
                 {/* text-orange-400 bg-red-600 hover:text-orange-600 hover:bg-red-400 */}
@@ -67,7 +101,7 @@ const index = () => {
           ))}
         </div>
         {/* Right div */}
-        <div className="basis-1/4 "> </div>
+
       </div>
     </div>
   );

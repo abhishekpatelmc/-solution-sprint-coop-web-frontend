@@ -1,43 +1,12 @@
 import { type NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
+import Link from 'next/link'
 import { useEffect, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
 import bannerImg from '../../public/images/get_hired.png'
+import { Company } from "../types";
 
-type Company = {
-  _id: string;
-  company_name: string;
-  location: string;
-  website: string;
-  logo_image_url: string;
-  review_count: number;
-  interview_count: number;
-  difficult_rating: number;
-  acceptance_rate: number;
-  offer_count: number;
-  common_job_posts: string[];
-};
-
-type ReviewDesc = {
-  desc: string;
-  questions: string[];
-  _id: string;
-};
-
-type Review = {
-  _id: string;
-  user_id: string;
-  company_id: string;
-  job_title: string;
-  interview_date: string;
-  review: ReviewDesc;
-  positive_flag: boolean;
-  job_offer_flag: boolean;
-  difficulty_rating: number;
-  created_date: string;
-  modified_date: string;
-};
 
 const Home: NextPage = () => {
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
@@ -89,20 +58,24 @@ const Home: NextPage = () => {
         </div>
         <div className="mx-10 mb-10 flex space-x-3">
           {topCompanies.map((company) => (
-            <div
+            <Link
               key={company.company_name}
+              href={{
+                pathname: '/company',
+                query: {company_id: company._id},
+              }}
               className={
-                "flex justify-center items-center rounded-xl bg-white bg-gradient-to-t p-3 text-base text-gray-600 shadow-xl"
+                "flex justify-center items-center rounded-xl bg-white bg-gradient-to-t p-3 text-base text-gray-600 shadow-xl transition duration-300 ease-in-out hover:scale-110"
               }
             >
-              <Image
-                src={company.logo_image_url}
-                width={200}
-                height={200}
-                alt={""}
-
-              />
-            </div>
+                <Image
+                  src={company.logo_image_url}
+                  width={200}
+                  height={200}
+                  alt={""}
+                />
+            </Link>
+            
           ))}
         </div>
         <div className="flex justify-center mb-10">
@@ -122,11 +95,16 @@ const Home: NextPage = () => {
             filtered.company_name.toLowerCase().includes(query))
             .map((comp) => (
               <div key={comp._id} className="flex flex-col justify-center">
-                <div
-                  className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white">
-                  <div className="w-full md:w-1/3 bg-white grid place-items-center">
-                    <img src={comp.logo_image_url} alt="company images" className="rounded-xl" />
-                  </div>
+                  <Link 
+                    href={{
+                      pathname: '/company',
+                      query: {company_id: comp._id},
+                    }}
+                    className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white transition duration-300 ease-in-out hover:scale-105"
+                  >
+                    <div className="w-full md:w-1/3 bg-white grid place-items-center">
+                      <img src={comp.logo_image_url} alt="company images" className="rounded-xl" />
+                    </div>
                     <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">
                       <h3 className="font-black text-gray-800 md:text-3xl text-xl">{comp.company_name}</h3>
                       <div className="flex justify-between item-center">
@@ -171,13 +149,11 @@ const Home: NextPage = () => {
                         <span>Common jobs</span>
                         {comp.common_job_posts}
                       </p>
-                    </div>
-                  </div>
+                    </div> 
+                  </Link>
                 </div>  
-          ))}
-        </div>
-
-
+            ))}
+          </div>
         </div>
       </main>
     </div>
