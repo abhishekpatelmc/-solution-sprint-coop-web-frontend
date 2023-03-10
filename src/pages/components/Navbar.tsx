@@ -22,13 +22,13 @@ const Navbar = () => {
           <div className="basis-1/8">
             <ul className="flex space-x-10">
               <li>
-                <a href="/">About</a>
+              <Link href="#">About</Link>
               </li>
               <li>
-                <a href="/company">Companies</a>
+                <Link href="/company">Companies</Link>
               </li>
               <li>
-                <a href="#">Post</a>
+              <Link href="#">Login</Link>
               </li>
 
               <li>
