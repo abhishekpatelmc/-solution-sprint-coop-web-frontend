@@ -13,16 +13,16 @@ import { Company, Interview } from "../../types";
 import Link from "next/link";
 
 
-const index = () => {
+const Index = () => {
 
   const [company, setCompany] = useState<Company>();
   const [interviews, setInterviews] = useState<Interview[]>([]);
-  const [isLoadingCompany, setLoadingCompany] = useState<Boolean>(true);
-  const [isLoadingInterview, setLoadingInterview] = useState<Boolean>(true);
+  const [isLoadingCompany, setLoadingCompany] = useState<boolean>(true);
+  const [isLoadingInterview, setLoadingInterview] = useState<boolean>(true);
 
   const router = useRouter();
   const query = router.query;
-  var companyId = query.company_id;
+  const companyId:any = query.company_id || "";
 
   useEffect(() => {
     /* Check if async query has arrived before calling APIs*/
@@ -199,7 +199,7 @@ const index = () => {
                 <div>
                   <p className="text-lg font-semibold mt-2 mb-1">Interview Questions</p>
                   <ol>
-                    {interview.review.questions.map((question) => <li><p className="text-md">{question}</p></li>)}
+                    {interview.review.questions.map((question, index) => <li key={index}><p className="text-md">{question}</p></li>)}
                   </ol>
                 </div> 
             
@@ -226,4 +226,4 @@ const index = () => {
   }
 };
 
-export default index;
+export default Index;
