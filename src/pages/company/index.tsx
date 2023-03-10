@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Moment from 'react-moment';
 
 import { SlLike, SlDislike } from "react-icons/sl";
 import { ImLocation } from "react-icons/im"
@@ -62,7 +63,7 @@ const index = () => {
     )
   } else {
     return (
-      <div>
+      <div className="bg-[url('../../public/images/back.svg')] bg-no-repeat bg-cover bg-center h-screen">
         <Navbar />
         {/* Main div */}
         <div className="m-5 flex flex-row">
@@ -75,7 +76,7 @@ const index = () => {
                 width={200}
                 height={200}
                 alt={""}
-                className="block ml-auto mr-auto"
+                className="block ml-auto mr-auto rounded-xl"
               />
               <div className="mt-0 mb-1 text-3xl font-semibold leading-tight text-primary text-center text-violet-800">{company?.company_name}</div>
               <div className="grid grid-cols-2 gap-4">
@@ -110,11 +111,20 @@ const index = () => {
           <div className="basis-3/4 space-y-5 p-5">
             {/* Inner div with options */} 
             {interviews.map((interview) => (
-              <div key={interview.title} className="rounded-xl border-2 p-4">
-                <h1 className="text-lg font-medium tracking-wide">
-                  {interview.title}
+              <div key={interview._id} className="flex flex-col rounded-xl bg-white bg-gradient-to-t p-3 text-base text-gray-600 shadow-xl transition duration-300 ease-in-out hover:opacity-90">
+                <p><Moment format="D MMMM YYYY" withTitle date={interview.interview_date} /></p>
+                <h1 className="text-2xl font-bold tracking-wide">
+                  {interview.job_title}<span> Interview</span>
                 </h1>
-                <p className="text-sm">{interview.review.desc}</p>
+                <p className="text-lg font-semibold mt-2 mb-1">Interview</p>
+                <p className="text-md">{interview.review.desc}</p>
+                <div>
+                  <p className="text-lg font-semibold mt-2 mb-1">Interview Questions</p>
+                  <ol>
+                    {interview.review.questions.map((question) => <li><p className="text-md">{question}</p></li>)}
+                  </ol>
+                </div> 
+            
                 {/* like and dislike button */}
                 <div className="mt-4 flex items-end space-x-5 text-lg ">
                   {/* text-orange-400 bg-red-600 hover:text-orange-600 hover:bg-red-400 */}
@@ -136,8 +146,6 @@ const index = () => {
       </div>
     );
   }
-
-  
 };
 
 export default index;
