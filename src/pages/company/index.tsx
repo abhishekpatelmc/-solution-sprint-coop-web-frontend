@@ -5,8 +5,8 @@ import Moment from 'react-moment';
 
 import { SlLike, SlDislike } from "react-icons/sl";
 import { ImLocation, ImCross } from "react-icons/im"
-import { GiSpiderWeb } from "react-icons/Gi"
-import { TiTick } from "react-icons/Ti"
+import { GiSpiderWeb } from "react-icons/gi"
+import { TiTick } from "react-icons/ti"
 import { BsCircleFill } from "react-icons/bs"
 import Navbar from "../components/Navbar";
 import { Company, Interview } from "../../types";
@@ -22,7 +22,7 @@ const Index = () => {
 
   const router = useRouter();
   const query = router.query;
-  const companyId:any = query.company_id || "";
+  const companyId= query.company_id as string 
 
   useEffect(() => {
     /* Check if async query has arrived before calling APIs*/
