@@ -4,7 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import bannerImg from "../../public/images/get_hired.png";
+import bannerImg from "public/get_hired.png";
 import type { Company } from "../types";
 
 const Home: NextPage = () => {
@@ -44,8 +44,8 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <div>
-        <img
-          src="/images/get_hired.png"
+        <Image
+          src={bannerImg}
           alt="Banner Image"
           className="w-full"
         />
