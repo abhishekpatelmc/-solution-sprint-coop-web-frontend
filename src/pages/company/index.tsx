@@ -4,8 +4,10 @@ import Image from "next/image";
 import Moment from 'react-moment';
 
 import { SlLike, SlDislike } from "react-icons/sl";
-import { ImLocation } from "react-icons/im"
+import { ImLocation, ImCross } from "react-icons/im"
 import { GiSpiderWeb } from "react-icons/Gi"
+import { TiTick } from "react-icons/Ti"
+import { BsCircleFill } from "react-icons/bs"
 import Navbar from "../components/Navbar";
 import { Company, Interview } from "../../types";
 import Link from "next/link";
@@ -79,6 +81,41 @@ const index = () => {
                 className="block ml-auto mr-auto rounded-xl"
               />
               <div className="mt-0 mb-1 text-3xl font-semibold leading-tight text-primary text-center text-violet-800">{company?.company_name}</div>
+              <div className="flex space-x-5">
+                <div className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-500" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <p className="text-gray-600 font-bold text-sm ml-1">
+                    {company?.acceptance_rate}
+                    <span className="text-gray-500 font-normal">({company?.review_count} reviews)</span>
+                  </p>
+                </div>
+                <div className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-500" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <p className="text-gray-600 font-bold text-sm ml-1">
+                    {company?.acceptance_rate}
+                    <span className="text-gray-500 font-normal">({company?.interview_count} interviews)</span>
+                  </p>
+                </div>
+                <div className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-500" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <p className="text-gray-600 font-bold text-sm ml-1">
+                    {company?.acceptance_rate}
+                    <span className="text-gray-500 font-normal">({company?.review_count} reviews)</span>
+                  </p>
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex space-x-2 align-center rounded-xl border-2 p-2">
                   <ImLocation className="hover:fill-green-500" />
@@ -116,6 +153,47 @@ const index = () => {
                 <h1 className="text-2xl font-bold tracking-wide">
                   {interview.job_title}<span> Interview</span>
                 </h1>
+                <div className="flex space-x-5">
+                  <div className="flex items-center">
+                    <p className="text-gray-600 font-bold ml-1">
+                      {interview?.job_offer_flag == true? 
+                      <span className="flex">
+                        <TiTick className="fill-green-500" size={42} />
+                        <span className="text-gray-500 font-normal "> Received Offer</span>
+                      </span>:
+                      <span className="flex">
+                        <ImCross className="fill-red-500" />
+                        <span className="text-gray-500 font-normal ">  No Offer</span>
+                      </span>
+                      }            
+                    </p>
+                  </div>
+                  <div className="flex items-center">
+                    <p className="text-gray-600 font-bold ml-1">
+                      {interview?.positive_flag == true? 
+                      <span className="flex">
+                        <BsCircleFill className="fill-green-500" size={26} />
+                        <span className="text-gray-500 font-normal ">  Positive Experience</span>
+                      </span>:
+                      <span className="flex">
+                        <BsCircleFill className="fill-red-500" />
+                        <span className="text-gray-500 font-normal ">  Negative Experience</span>
+                      </span>
+                      }            
+                    </p>
+                  </div>
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-yellow-500" viewBox="0 0 20 20"
+                      fill="currentColor">
+                      <path
+                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <p className="text-gray-600 font-bold ml-1">
+                      {interview?.difficulty_rating}
+                      <span className="text-gray-500 font-normal">/10 difficulty rating</span>
+                    </p>
+                  </div>
+                </div>
                 <p className="text-lg font-semibold mt-2 mb-1">Interview</p>
                 <p className="text-md">{interview.review.desc}</p>
                 <div>
