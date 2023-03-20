@@ -37,7 +37,7 @@ export const Navbar = () => {
     const { instance } = useMsal();
 
     return (
-      <button onClick={() => signInClickHandler(instance)}>Sign IN</button>
+      <button onClick={() => signInClickHandler(instance)}>Sign In</button>
     );
   }
 
@@ -64,9 +64,6 @@ export const Navbar = () => {
               </li>
               <li>
                 <Link href="/company">Companies</Link>
-              </li>
-              <li>
-                <Link href="#">Login</Link>
               </li>
               <li>
                 <AuthenticatedTemplate>
