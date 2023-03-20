@@ -1,23 +1,45 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+// JJ Code Start
 import {
+  useMsal,
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
-  useMsal,
 } from "@azure/msal-react";
-import { useIsAuthenticated } from "@azure/msal-react";
-import { loginRequest } from "../auth/index";
 
-const Navbar = () => {
-  const { instance } = useMsal();
-  const isAuthenticated = useIsAuthenticated();
+import { signInClickHandler, signOutClickHandler } from "./auth";
+// JJ Code End
 
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
-    instance.loginRedirect(loginRequest);
-    await instance.handleRedirectPromise();
-  };
+export const Navbar = () => {
+  const [userName, setUserName] = useState("");
+
+  // JJ Code
+  const { accounts } = useMsal();
+  function WelcomeUser() {
+    setUserName(String(accounts[0]?.username));
+    console.log("Is User :", userName);
+
+    return <p>Welcome, {userName}</p>;
+  }
+
+  function SignOutButton() {
+    // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
+    const { instance } = useMsal();
+
+    return (
+      <button onClick={() => signOutClickHandler(instance)}>Sign Out</button>
+    );
+  }
+
+  function SignINButton() {
+    // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
+    const { instance } = useMsal();
+
+    return (
+      <button onClick={() => signInClickHandler(instance)}>Sign IN</button>
+    );
+  }
 
   return (
     <>
@@ -38,26 +60,32 @@ const Navbar = () => {
           <div className="basis-1/8">
             <ul className="flex space-x-10">
               <li>
-                <a href="/">About</a>
+                <Link href="#">About</Link>
               </li>
               <li>
-                <a href="/company">Companies</a>
+                <Link href="/company">Companies</Link>
               </li>
               <li>
-                <a href="#">Post</a>
+                <Link href="#">Login</Link>
               </li>
-
               <li>
-                <button onClick={() => handleLogin}> Sign In </button>
-                {/* <Link href="/login">
-                  <Image
-                    quality={100}
-                    width={30}
-                    height={30}
-                    src="/icons/user.png"
-                    alt="user"
-                  />
-                </Link> */}
+                <AuthenticatedTemplate>
+                  <WelcomeUser />
+                  <SignOutButton />
+                </AuthenticatedTemplate>
+                <UnauthenticatedTemplate>
+                  {/* <SignInButton /> */}
+                  <SignINButton />
+                  {/* <button type="button" onClick={() => signInClickHandler()}>
+                    <Image
+                      quality={100}
+                      width={30}
+                      height={30}
+                      src="/icons/user.png"
+                      alt="user"
+                    />
+                  </button> */}
+                </UnauthenticatedTemplate>
               </li>
             </ul>
           </div>
@@ -68,3 +96,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+function WelcomeUser() {
+  throw new Error("Function not implemented.");
+}
