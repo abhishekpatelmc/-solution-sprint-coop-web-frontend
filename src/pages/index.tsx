@@ -4,7 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
-import bannerImg from "../../public/images/get_hired.png";
+import bannerImg from "../../public/getHired.png";
 import { Company } from "../types";
 
 const Home: NextPage = () => {
