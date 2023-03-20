@@ -1,8 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import {
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+  useMsal,
+} from "@azure/msal-react";
+import { useIsAuthenticated } from "@azure/msal-react";
+import { loginRequest } from "../auth/index";
 
 const Navbar = () => {
+  const { instance } = useMsal();
+  const isAuthenticated = useIsAuthenticated();
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    instance.loginRedirect(loginRequest);
+    await instance.handleRedirectPromise();
+  };
+
   return (
     <>
       <div className="border-b-2 shadow-md">
@@ -32,7 +48,8 @@ const Navbar = () => {
               </li>
 
               <li>
-                <Link href="/login">
+                <button onClick={() => handleLogin}> Sign In </button>
+                {/* <Link href="/login">
                   <Image
                     quality={100}
                     width={30}
@@ -40,7 +57,7 @@ const Navbar = () => {
                     src="/icons/user.png"
                     alt="user"
                   />
-                </Link>
+                </Link> */}
               </li>
             </ul>
           </div>
