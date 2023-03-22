@@ -35,7 +35,7 @@ const Index = () => {
   const { instance } = useMsal();
 
   useEffect(() => {
-    (async () => {
+    async () => {
       console.log("Acc Node ::", accounts, accounts.length);
       if (!accounts || accounts.length === 0) {
         toast("Please Sign In First", {
@@ -43,13 +43,13 @@ const Index = () => {
           autoClose: 4000,
           type: "success",
         });
-        await signInClickHandler(instance);
-        router.push("/");
+        await signInClickHandler(instance).then().catch();
+        await router.push("/");
       }
       if (!companyId) {
         return;
       }
-    })();
+    };
 
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/company/${companyId}`)
