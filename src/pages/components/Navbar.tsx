@@ -1,8 +1,46 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+// JJ Code Start
+import {
+  useMsal,
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+} from "@azure/msal-react";
 
-const Navbar = () => {
+import { signInClickHandler, signOutClickHandler } from "./auth";
+// JJ Code End
+
+export const Navbar = () => {
+  const [userName, setUserName] = useState("");
+
+  // JJ Code
+  const { accounts } = useMsal();
+  function WelcomeUser() {
+    setUserName(String(accounts[0]?.username));
+    console.log("Is User :", userName);
+
+    return <p>Welcome, {userName}</p>;
+  }
+
+  function SignOutButton() {
+    // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
+    const { instance } = useMsal();
+
+    return (
+      <button onClick={() => signOutClickHandler(instance)}>Sign Out</button>
+    );
+  }
+
+  function SignINButton() {
+    // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
+    const { instance } = useMsal();
+
+    return (
+      <button onClick={() => signInClickHandler(instance)}>Sign In</button>
+    );
+  }
+
   return (
     <>
       <div className="border-b-2 shadow-md">
@@ -22,25 +60,29 @@ const Navbar = () => {
           <div className="basis-1/8">
             <ul className="flex space-x-10">
               <li>
-              <Link href="#">About</Link>
+                <Link href="#">About</Link>
               </li>
               <li>
                 <Link href="/company">Companies</Link>
               </li>
               <li>
-              <Link href="#">Login</Link>
-              </li>
-
-              <li>
-                <Link href="/login">
-                  <Image
-                    quality={100}
-                    width={30}
-                    height={30}
-                    src="/icons/user.png"
-                    alt="user"
-                  />
-                </Link>
+                <AuthenticatedTemplate>
+                  <WelcomeUser />
+                  <SignOutButton />
+                </AuthenticatedTemplate>
+                <UnauthenticatedTemplate>
+                  {/* <SignInButton /> */}
+                  <SignINButton />
+                  {/* <button type="button" onClick={() => signInClickHandler()}>
+                    <Image
+                      quality={100}
+                      width={30}
+                      height={30}
+                      src="/icons/user.png"
+                      alt="user"
+                    />
+                  </button> */}
+                </UnauthenticatedTemplate>
               </li>
             </ul>
           </div>
@@ -51,3 +93,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+function WelcomeUser() {
+  throw new Error("Function not implemented.");
+}

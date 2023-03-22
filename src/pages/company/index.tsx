@@ -4,13 +4,19 @@ import Image from "next/image";
 import Moment from "react-moment";
 
 import { SlLike, SlDislike } from "react-icons/sl";
-import { ImLocation, ImCross } from "react-icons/im"
-import { GiSpiderWeb } from "react-icons/gi"
-import { TiTick } from "react-icons/ti"
-import { BsCircleFill } from "react-icons/bs"
+import { ImLocation, ImCross } from "react-icons/im";
+import { GiSpiderWeb } from "react-icons/Gi";
+import { TiTick } from "react-icons/Ti";
+import { BsCircleFill } from "react-icons/bs";
 import Navbar from "../components/Navbar";
 import type { Company, Interview } from "../../types";
 import Link from "next/link";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { msalConfig } from "../../authConfig";
+
+import { toast } from "react-toastify";
+import { signInClickHandler } from "../components/auth";
+import { useMsal } from "@azure/msal-react";
 
 const Index = () => {
   const [company, setCompany] = useState<Company>();
@@ -20,10 +26,25 @@ const Index = () => {
 
   const router = useRouter();
   const query = router.query;
-  const companyId= query.company_id as string 
+  const companyId = query.company_id as string;
+
+  //Jaiman Code
+  const msalInstance = new PublicClientApplication(msalConfig);
+
+  const accounts = msalInstance.getAllAccounts();
+  const { instance } = useMsal();
 
   useEffect(() => {
-    /* Check if async query has arrived before calling APIs*/
+    console.log("Acc Node ::", accounts, accounts.length);
+    if (!accounts || accounts.length === 0) {
+      toast("Please Sign In First", {
+        hideProgressBar: true,
+        autoClose: 4000,
+        type: "success",
+      });
+      signInClickHandler(instance);
+      router.push("/");
+    }
     if (!companyId) {
       return;
     }
