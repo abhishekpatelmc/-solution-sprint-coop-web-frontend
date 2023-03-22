@@ -7,7 +7,7 @@ import { useMsal } from "@azure/msal-react";
 
 import { IPublicClientApplication } from "@azure/msal-browser";
 
-export function signOutClickHandler(instance: IPublicClientApplication) {
+export async function signOutClickHandler(instance: IPublicClientApplication) {
   //Jaiman Code
   const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -19,11 +19,13 @@ export function signOutClickHandler(instance: IPublicClientApplication) {
     account: instance.getAccountByHomeId(String(homeAccID)),
     postLogoutRedirectUri: "http://localhost:3000/",
   };
-  instance.logoutPopup(logoutRequest);
+  await instance.logoutPopup(logoutRequest);
 }
 
-export function signInClickHandler(instance: IPublicClientApplication): any {
-  instance
+export async function signInClickHandler(
+  instance: IPublicClientApplication
+): Promise<void> {
+  await instance
     .loginPopup({
       scopes: ["User.Read"],
       authority: "https://login.microsoftonline.com/uwindsor.ca",
