@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import Moment from "react-moment";
 
@@ -9,7 +8,7 @@ import { GiSpiderWeb } from "react-icons/Gi";
 import { TiTick } from "react-icons/Ti";
 import { BsCircleFill } from "react-icons/bs";
 import Navbar from "../components/Navbar";
-import type { Company, Interview } from "../../types";
+// import type { Company, Interview } from "../../types";
 import Link from "next/link";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { msalConfig } from "../../authConfig";
@@ -18,15 +17,17 @@ import { toast } from "react-toastify";
 import { signInClickHandler } from "../components/auth";
 import { useMsal } from "@azure/msal-react";
 
+import { useRouter } from "next/router";
+
 const Index = () => {
-  const [company, setCompany] = useState<Company>();
-  const [interviews, setInterviews] = useState<Interview[]>([]);
-  const [isLoadingCompany, setLoadingCompany] = useState<boolean>(true);
-  const [isLoadingInterview, setLoadingInterview] = useState<boolean>(true);
+  const [company, setCompany] = useState();
+  const [interviews, setInterviews] = useState([]);
+  const [isLoadingCompany, setLoadingCompany] = useState(true);
+  const [isLoadingInterview, setLoadingInterview] = useState(true);
 
   const router = useRouter();
   const query = router.query;
-  const companyId = query.company_id as string;
+  const companyId = String(query.company_id);
 
   //Jaiman Code
   const msalInstance = new PublicClientApplication(msalConfig);
@@ -35,26 +36,32 @@ const Index = () => {
   const { instance } = useMsal();
 
   useEffect(() => {
-    async () => {
-      console.log("Acc Node ::", accounts, accounts.length);
-      if (!accounts || accounts.length === 0) {
-        toast("Please Sign In First", {
-          hideProgressBar: true,
-          autoClose: 4000,
-          type: "success",
-        });
-        await signInClickHandler(instance).then().catch();
-        await router.push("/");
+    console.log("Acc Node ::", accounts, accounts.length);
+    if (!accounts || accounts.length === 0) {
+      toast("Please Sign In First", {
+        hideProgressBar: true,
+        autoClose: 4000,
+        type: "success",
+      });
+      try {
+        signInClickHandler(instance);
+        router.replace("/");
+      } catch (error) {
+        console.log(error);
       }
-      if (!companyId) {
-        return;
-      }
-    };
+    }
+    if (!companyId) {
+      return;
+    }
+
+    if (!companyId) {
+      return;
+    }
 
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/company/${companyId}`)
         .then((res) => res.json())
-        .then((data: Company) => {
+        .then((data) => {
           setCompany(data);
           setLoadingCompany(false);
         })
@@ -66,7 +73,7 @@ const Index = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews/${companyId}`
       )
         .then((res) => res.json())
-        .then((data: Interview[]) => {
+        .then((data) => {
           setInterviews(data);
           setLoadingInterview(false);
         })
