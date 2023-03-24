@@ -1,11 +1,9 @@
 import { PublicClientApplication } from "@azure/msal-browser";
 import { msalConfig } from "../../authConfig";
 import Router from "next/router";
+import type { IPublicClientApplication } from "@azure/msal-browser";
 
 // JJ Code Start
-import { useMsal } from "@azure/msal-react";
-
-import { IPublicClientApplication } from "@azure/msal-browser";
 
 export async function signOutClickHandler(instance: IPublicClientApplication) {
   //Jaiman Code

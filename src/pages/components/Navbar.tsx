@@ -1,6 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { FaRegUserCircle, FaUserCircle } from "react-icons/fa";
+
 // JJ Code Start
 import {
   useMsal,
@@ -25,33 +26,6 @@ export const Navbar = () => {
     // console.log("Is User :", userName);
     return <p>Welcome, {name.substring(0, name.indexOf(" "))}</p>;
   }
-
-  // function SignINButton() {
-  //   // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
-
-  //   return (
-  //     <button
-  //       className="hover:text-green-600"
-  //       onClick={() => signInClickHandler(instance)}
-  //     >
-  //       Sign In
-  //     </button>
-  //   );
-  // }
-
-  // function SignOutButton() {
-  //   // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
-  //   const { instance } = useMsal();
-
-  //   return (
-  //     <button
-  //       className="hover:text-red-400"
-  //       onClick={() => signOutClickHandler(instance)}
-  //     >
-  //       Sign Out
-  //     </button>
-  //   );
-  // }
 
   return (
     <>
@@ -88,13 +62,7 @@ export const Navbar = () => {
                     className="flex gap-2 hover:text-red-400"
                   >
                     <p className="text-lg">Sign Out</p>
-                    <Image
-                      quality={100}
-                      width={30}
-                      height={30}
-                      src="/icons/user.png"
-                      alt="user"
-                    />
+                    <FaUserCircle size={26} />
                   </button>
                 </AuthenticatedTemplate>
                 <UnauthenticatedTemplate>
@@ -105,13 +73,7 @@ export const Navbar = () => {
                     className="flex gap-2 hover:text-green-600"
                   >
                     <p className="text-lg">Sign In</p>
-                    <Image
-                      quality={100}
-                      width={30}
-                      height={30}
-                      src="/icons/user.png"
-                      alt="user"
-                    />
+                    <FaRegUserCircle size={26} />
                   </button>
                 </UnauthenticatedTemplate>
               </li>
@@ -124,4 +86,3 @@ export const Navbar = () => {
 };
 
 export default Navbar;
-
