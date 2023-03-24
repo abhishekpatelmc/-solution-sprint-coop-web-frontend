@@ -2,7 +2,10 @@ export const msalConfig = {
   auth: {
     clientId: "533a1bd8-efe8-4b53-a731-b463dc3ebc7b",
     authority: "https://login.microsoftonline.com/common", // This is a URL (e.g. https://login.microsoftonline.com/{your tenant ID})
-    redirectUri: "http://localhost:3000",
+    redirectUri:
+      "http://localhost:3000" ||
+      "https://lancersview-git-dev-abhishekpatelmc.vercel.app/" ||
+      "https://lancersview.vercel.app/",
   },
   cache: {
     cacheLocation: "sessionStorage", // This configures where your cache will be stored
