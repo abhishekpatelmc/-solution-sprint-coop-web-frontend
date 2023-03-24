@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // JJ Code Start
 import {
   useMsal,
@@ -13,23 +12,15 @@ import { signInClickHandler, signOutClickHandler } from "./auth";
 
 export const Navbar = () => {
   const [userName, setUserName] = useState("");
+  const [name, setName] = useState("");
 
   // JJ Code
   const { accounts } = useMsal();
   function WelcomeUser() {
     setUserName(String(accounts[0]?.username));
+    setName(String(accounts[0]?.name));
     console.log("Is User :", userName);
-
-    return <p>Welcome, {userName}</p>;
-  }
-
-  function SignOutButton() {
-    // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
-    const { instance } = useMsal();
-
-    return (
-      <button onClick={() => signOutClickHandler(instance)}>Sign Out</button>
-    );
+    return <p>Welcome, {name.substring(0, name.indexOf(" "))}</p>;
   }
 
   function SignINButton() {
@@ -37,43 +28,62 @@ export const Navbar = () => {
     const { instance } = useMsal();
 
     return (
-      <button onClick={() => signInClickHandler(instance)}>Sign In</button>
+      <button
+        className="hover:text-green-600"
+        onClick={() => signInClickHandler(instance)}
+      >
+        Sign In
+      </button>
+    );
+  }
+
+  function SignOutButton() {
+    // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
+    const { instance } = useMsal();
+
+    return (
+      <button
+        className="hover:text-red-400"
+        onClick={() => signOutClickHandler(instance)}
+      >
+        Sign Out
+      </button>
     );
   }
 
   return (
     <>
-      <div className="border-b-2 shadow-md">
+      <div className="border-b-2 bg-gray-100 shadow-md ">
         <nav className="mx-10 flex h-16 flex-row items-center justify-between text-lg text-gray-700">
-          <div className="basis-1/6">
+          <div className="basis-1/5">
             <h1 className="text-2xl font-bold tracking-wide antialiased">
-              Lancer&apos;s View
+              <Link href="/">Lancer&apos;s View</Link>
             </h1>
           </div>
+          {/* This is serach bar */}
           <div className="basis-1">
             <input
               type="text"
-              className="w-96 rounded-lg border-2 px-2 py-1 text-base"
+              className="w-96 rounded-lg border-2 border-gray-300 px-2 py-1 text-center text-base"
               placeholder="Search for a company, job title, or keyword"
             />
           </div>
-          <div className="basis-1/8">
-            <ul className="flex space-x-10">
+          <div className="basis-1/10 text-lg">
+            <ul className="flex gap-6">
               <li>
-                <Link href="#">About</Link>
+                <Link href="/aboutus">About</Link>
               </li>
               <li>
                 <Link href="/company">Companies</Link>
               </li>
-              <li>
+              <li className="flex gap-6">
                 <AuthenticatedTemplate>
                   <WelcomeUser />
                   <SignOutButton />
                 </AuthenticatedTemplate>
                 <UnauthenticatedTemplate>
-                  {/* <SignInButton /> */}
                   <SignINButton />
-                  {/* <button type="button" onClick={() => signInClickHandler()}>
+                  {/* <button type="button" onClick={() => signInClickHandler(instance)}>
                     <Image
                       quality={100}
                       width={30}
