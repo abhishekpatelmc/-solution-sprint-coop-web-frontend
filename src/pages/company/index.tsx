@@ -12,7 +12,7 @@ import Link from "next/link";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { msalConfig } from "../../authConfig";
 import { toast } from "react-toastify";
-import { signInClickHandler } from "../components/auth";
+import { signInClickHandler } from "../api/auth/auth";
 import { useMsal } from "@azure/msal-react";
 import { useRouter } from "next/router";
 

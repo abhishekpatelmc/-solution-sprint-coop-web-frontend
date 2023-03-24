@@ -1,5 +1,5 @@
 import { PublicClientApplication } from "@azure/msal-browser";
-import { msalConfig } from "../../authConfig";
+import { msalConfig } from "../../../authConfig";
 import Router from "next/router";
 import type { IPublicClientApplication } from "@azure/msal-browser";
 

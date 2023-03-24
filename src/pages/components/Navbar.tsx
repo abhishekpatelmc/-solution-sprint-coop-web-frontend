@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaRegUserCircle, FaUserCircle } from "react-icons/fa";
+import { signInClickHandler, signOutClickHandler } from "../api/auth/auth";
 
 // JJ Code Start
 import {
@@ -9,7 +10,6 @@ import {
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
 
-import { signInClickHandler, signOutClickHandler } from "./auth";
 // JJ Code End
 
 export const Navbar = () => {
