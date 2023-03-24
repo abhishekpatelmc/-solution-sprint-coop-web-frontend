@@ -12,11 +12,12 @@ const aboutus = () => {
         <div className="flex justify-center">
           <div className="mt-10 w-1/2">
             <p className="text-justify">
-              Lancer's View is a review website for the University of Windsor
-              students and alumni to share their experiences and perspectives
-              about companies and interview insights. The website is designed to
-              be a platform for students to share their experiences and
-              perspectives about companies and interview insights.
+              Lancer&apos;s View is a review website for the University of
+              Windsor students and alumni to share their experiences and
+              perspectives about companies and interview insights. The website
+              is designed to be a platform for students to share their
+              experiences and perspectives about companies and interview
+              insights.
             </p>
           </div>
         </div>

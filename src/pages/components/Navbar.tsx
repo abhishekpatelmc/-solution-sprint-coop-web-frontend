@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 // JJ Code Start
@@ -11,45 +12,46 @@ import { signInClickHandler, signOutClickHandler } from "./auth";
 // JJ Code End
 
 export const Navbar = () => {
-  const [userName, setUserName] = useState("");
+  const { instance } = useMsal();
+  // const [userName, setUserName] = useState("");
   const [name, setName] = useState("");
 
   // JJ Code
   const { accounts } = useMsal();
   function WelcomeUser() {
-    setUserName(String(accounts[0]?.username));
+    // setUserName(String(accounts[0]?.username));
     setName(String(accounts[0]?.name));
-    console.log("Is User :", userName);
+    console.log("Is User :", name);
+    // console.log("Is User :", userName);
     return <p>Welcome, {name.substring(0, name.indexOf(" "))}</p>;
   }
 
-  function SignINButton() {
-    // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
-    const { instance } = useMsal();
+  // function SignINButton() {
+  //   // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
 
-    return (
-      <button
-        className="hover:text-green-600"
-        onClick={() => signInClickHandler(instance)}
-      >
-        Sign In
-      </button>
-    );
-  }
+  //   return (
+  //     <button
+  //       className="hover:text-green-600"
+  //       onClick={() => signInClickHandler(instance)}
+  //     >
+  //       Sign In
+  //     </button>
+  //   );
+  // }
 
-  function SignOutButton() {
-    // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
-    const { instance } = useMsal();
+  // function SignOutButton() {
+  //   // useMsal hook will return the PublicClientApplication instance you provided to MsalProvider
+  //   const { instance } = useMsal();
 
-    return (
-      <button
-        className="hover:text-red-400"
-        onClick={() => signOutClickHandler(instance)}
-      >
-        Sign Out
-      </button>
-    );
-  }
+  //   return (
+  //     <button
+  //       className="hover:text-red-400"
+  //       onClick={() => signOutClickHandler(instance)}
+  //     >
+  //       Sign Out
+  //     </button>
+  //   );
+  // }
 
   return (
     <>
@@ -73,17 +75,19 @@ export const Navbar = () => {
               <li>
                 <Link href="/aboutus">About</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/company">Companies</Link>
-              </li>
+              </li> */}
               <li className="flex gap-6">
                 <AuthenticatedTemplate>
                   <WelcomeUser />
-                  <SignOutButton />
-                </AuthenticatedTemplate>
-                <UnauthenticatedTemplate>
-                  <SignINButton />
-                  {/* <button type="button" onClick={() => signInClickHandler(instance)}>
+                  {/* <SignOutButton /> */}
+                  <button
+                    type="button"
+                    onClick={() => signOutClickHandler(instance)}
+                    className="flex gap-2 hover:text-red-400"
+                  >
+                    <p className="text-lg">Sign Out</p>
                     <Image
                       quality={100}
                       width={30}
@@ -91,7 +95,24 @@ export const Navbar = () => {
                       src="/icons/user.png"
                       alt="user"
                     />
-                  </button> */}
+                  </button>
+                </AuthenticatedTemplate>
+                <UnauthenticatedTemplate>
+                  {/* <SignINButton /> */}
+                  <button
+                    type="button"
+                    onClick={() => signInClickHandler(instance)}
+                    className="flex gap-2 hover:text-green-600"
+                  >
+                    <p className="text-lg">Sign In</p>
+                    <Image
+                      quality={100}
+                      width={30}
+                      height={30}
+                      src="/icons/user.png"
+                      alt="user"
+                    />
+                  </button>
                 </UnauthenticatedTemplate>
               </li>
             </ul>
@@ -103,6 +124,4 @@ export const Navbar = () => {
 };
 
 export default Navbar;
-function WelcomeUser() {
-  throw new Error("Function not implemented.");
-}
+
