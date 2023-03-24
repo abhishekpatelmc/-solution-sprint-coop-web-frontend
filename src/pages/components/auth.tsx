@@ -50,5 +50,4 @@ export async function signOutClickHandler(
     postLogoutRedirectUri: "http://localhost:3000/",
   };
   await instance.logoutPopup(logoutRequest);
-  return;
 }
