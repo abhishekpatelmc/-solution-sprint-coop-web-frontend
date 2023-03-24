@@ -17,7 +17,7 @@ import { useMsal } from "@azure/msal-react";
 import { useRouter } from "next/router";
 
 const Index = () => {
-  const [company, setCompany] = useState<Company>();
+  const [company, setCompany] = useState<Company | undefined>();
   const [interviews, setInterviews] = useState<Interview[]>([]);
   const [topJobs, setTopJobs] = useState<Job[]>([]);
   const [isLoadingCompany, setLoadingCompany] = useState<boolean>(true);
@@ -34,61 +34,62 @@ const Index = () => {
   const { instance } = useMsal();
 
   useEffect(() => {
-    console.log("Acc Node ::", accounts, accounts.length);
-    if (!accounts || accounts.length === 0) {
-      toast("Please Sign In First", {
-        hideProgressBar: true,
-        autoClose: 4000,
-        type: "success",
-      });
-      try {
-        signInClickHandler(instance);
-        router.replace("/");
-      } catch (error) {
-        console.log(error);
+    async function fetchData() {
+      console.log("Acc Node ::", accounts, accounts.length);
+      if (!accounts || accounts.length === 0) {
+        toast("Please Sign In First", {
+          hideProgressBar: true,
+          autoClose: 4000,
+          type: "success",
+        });
+        try {
+          signInClickHandler(instance);
+          await router.replace("/");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (!companyId) {
+        return;
+      }
+
+      if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
+        try {
+          const companyRes = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/company/${companyId}`
+          );
+          const companyData = (await companyRes.json()) as Company;
+          setCompany(companyData);
+          setLoadingCompany(false);
+        } catch (err) {
+          console.log(err);
+        }
+
+        try {
+          const interviewsRes = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews/${companyId}`
+          );
+          const interviewsData = (await interviewsRes.json()) as Interview[];
+          setInterviews(interviewsData);
+          setLoadingInterview(false);
+        } catch (err) {
+          console.log(err);
+        }
+
+        try {
+          const topJobsRes = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/jobs/top/${companyId}`
+          );
+          const topJobsData = (await topJobsRes.json()) as Job[];
+          setTopJobs(topJobsData);
+          setLoadingJob(false);
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
-    if (!companyId) {
-      return;
-    }
-
-    if (!companyId) {
-      return;
-    }
-
-    if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/company/${companyId}`)
-        .then((res) => res.json())
-        .then((data: Company) => {
-          setCompany(data);
-          setLoadingCompany(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews/${companyId}`
-      )
-        .then((res) => res.json())
-        .then((data: Interview[]) => {
-          setInterviews(data);
-          setLoadingInterview(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/jobs/top/${companyId}`)
-        .then((res) => res.json())
-        .then((data: Job[]) => {
-          setTopJobs(data);
-          setLoadingJob(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    fetchData();
   }, [companyId, instance, router, accounts]);
 
   if (isLoadingCompany || isLoadingInterview || isLoadingJob) {
