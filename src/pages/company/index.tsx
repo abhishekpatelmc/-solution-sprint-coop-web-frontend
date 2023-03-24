@@ -9,7 +9,7 @@ import { GiSpiderWeb } from "react-icons/Gi";
 import { TiTick } from "react-icons/Ti";
 import { BsCircleFill } from "react-icons/bs";
 import Navbar from "../components/Navbar";
-import type { Company, Interview } from "../../types";
+import type { Company, Interview, Job } from "../../types";
 import Link from "next/link";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { msalConfig } from "../../authConfig";
@@ -21,11 +21,14 @@ import { useMsal } from "@azure/msal-react";
 const Index = () => {
   const [company, setCompany] = useState<Company>();
   const [interviews, setInterviews] = useState<Interview[]>([]);
+  const [topJobs, setTopJobs] = useState<Job[]>([]);
   const [isLoadingCompany, setLoadingCompany] = useState<boolean>(true);
   const [isLoadingInterview, setLoadingInterview] = useState<boolean>(true);
+  const [isLoadingJob, setLoadingJob] = useState<boolean>(true);
 
   const router = useRouter();
   const query = router.query;
+  const companyId = query.company_id as string 
   const companyId = query.company_id as string;
 
   //Jaiman Code
@@ -33,6 +36,7 @@ const Index = () => {
 
   const accounts = msalInstance.getAllAccounts();
   const { instance } = useMsal();
+
 
   useEffect(() => {
     console.log("Acc Node ::", accounts, accounts.length);
@@ -71,10 +75,21 @@ const Index = () => {
         .catch((err) => {
           console.log(err);
         });
+
+      fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/jobs/top/${companyId}`)
+          .then((res) => res.json())
+          .then((data: Job[]) => {
+            setTopJobs(data);
+            setLoadingJob(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
     }
   }, [companyId]);
 
-  if (isLoadingCompany || isLoadingInterview) {
+  if (isLoadingCompany || isLoadingInterview || isLoadingJob) {
     return (
       <div
         className="text-secondary inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]"
@@ -188,6 +203,31 @@ const Index = () => {
               <div className="flex space-x-2 rounded-xl border-2 p-2">
                 <span className="font-semibold">Founded:</span>
                 <span>1901</span>
+              </div>
+            </div>
+
+            <div className="align-center mt-5 flex-col justify-center space-y-4 rounded-xl border-2 p-4">
+              <div className="text-primary mt-0 mb-1 text-center text-2xl font-semibold leading-tight">
+                Current Openings
+              </div>
+              {topJobs.map((job) => {
+                return(
+                  <Link
+                    href={job?.job_link || ""}
+                    className="flex justify-between rounded-xl border-2 p-2"
+                  >
+                    <span className="font-semibold text-violet-800 underline">{job.job_title}</span>
+                    <span>{job.term}</span>
+                  </Link>
+                   )  
+              })}
+              <div>
+                <Link
+                    href={""}
+                    className="flex justify-center rounded-xl p-2 font-semibold text-violet-800 underline"
+                  >
+                    <span>View more jobs...</span>
+                  </Link>
               </div>
             </div>
           </div>
