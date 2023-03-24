@@ -3,7 +3,7 @@ import Image from "next/image";
 import Moment from "react-moment";
 import { SlLike, SlDislike } from "react-icons/sl";
 import { ImLocation, ImCross } from "react-icons/im";
-import { GiSpiderWeb } from "react-icons/Gi";
+import { BiWorld } from "react-icons/bi";
 import { TiTick } from "react-icons/Ti";
 import { BsCircleFill } from "react-icons/bs";
 import Navbar from "../components/Navbar";
@@ -177,12 +177,12 @@ const Index = () => {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="align-center flex space-x-2 rounded-xl border-2 p-2">
-                  <ImLocation className="hover:fill-green-500" />
+                <div className="flex items-center space-x-2 rounded-xl border-2 p-2">
+                  <ImLocation size={28} className="hover:fill-green-500" />
                   <p className="font-semibold">{company?.location}</p>
                 </div>
-                <div className="flex space-x-2 rounded-xl border-2 p-2">
-                  <GiSpiderWeb className="hover:fill-green-500" />
+                <div className="flex items-center space-x-2 rounded-xl border-2 p-2">
+                  <BiWorld size={28} className="hover:fill-green-500" />
                   <Link
                     href={company?.website || ""}
                     className="font-semibold text-violet-800 underline"
