@@ -4,26 +4,8 @@ import Router from "next/router";
 import type { IPublicClientApplication } from "@azure/msal-browser";
 
 // JJ Code Start
-
-export async function signOutClickHandler(instance: IPublicClientApplication) {
-  //Jaiman Code
-  const msalInstance = new PublicClientApplication(msalConfig);
-
-  const accounts = msalInstance.getAllAccounts();
-  console.log("Account ::: ", accounts, accounts[0]?.homeAccountId);
-  const homeAccID = accounts[0]?.homeAccountId;
-
-  const logoutRequest = {
-    account: instance.getAccountByHomeId(String(homeAccID)),
-    postLogoutRedirectUri: "http://localhost:3000/",
-  };
-  await instance.logoutPopup(logoutRequest);
-}
-
-export async function signInClickHandler(
-  instance: IPublicClientApplication
-): Promise<void> {
-  await instance
+export function signInClickHandler(instance: IPublicClientApplication): void {
+  instance
     .loginPopup({
       scopes: ["User.Read"],
       authority: "https://login.microsoftonline.com/uwindsor.ca",
@@ -51,4 +33,22 @@ export async function signInClickHandler(
           console.error(err);
         });
     });
+}
+
+export async function signOutClickHandler(
+  instance: IPublicClientApplication
+): Promise<void> {
+  //Jaiman Code
+  const msalInstance = new PublicClientApplication(msalConfig);
+
+  const accounts = msalInstance.getAllAccounts();
+  console.log("Account ::: ", accounts, accounts[0]?.homeAccountId);
+  const homeAccID = accounts[0]?.homeAccountId;
+
+  const logoutRequest = {
+    account: instance.getAccountByHomeId(String(homeAccID)),
+    postLogoutRedirectUri: "http://localhost:3000/",
+  };
+  await instance.logoutPopup(logoutRequest);
+  return;
 }

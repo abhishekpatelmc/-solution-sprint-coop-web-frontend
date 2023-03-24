@@ -49,9 +49,6 @@ export const Navbar = () => {
               <li>
                 <Link href="/aboutus">About</Link>
               </li>
-              {/* <li>
-                <Link href="/company">Companies</Link>
-              </li> */}
               <li className="flex gap-6">
                 <AuthenticatedTemplate>
                   <WelcomeUser />

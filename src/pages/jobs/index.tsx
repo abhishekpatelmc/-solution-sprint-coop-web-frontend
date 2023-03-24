@@ -1,9 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 
-type Props = {};
-
-const index = (props: Props) => {
+const index = () => {
   return (
     <div>
       <Navbar />
