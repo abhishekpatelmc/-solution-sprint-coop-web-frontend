@@ -20,6 +20,7 @@ const Home: NextPage = () => {
         .then((data: Company[]) => {
           setAllCompanies(data);
         })
+        .then((res) => console.log(res))
         .catch((err) => {
           console.log(err);
         });

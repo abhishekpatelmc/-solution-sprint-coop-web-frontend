@@ -27,6 +27,16 @@ export const Navbar = () => {
     return <p>Welcome, {name.substring(0, name.indexOf(" "))}</p>;
   }
 
+  function Feed() {
+    return (
+      <li>
+        <AuthenticatedTemplate>
+          <Link href="/feed">Add Post</Link>
+        </AuthenticatedTemplate>
+      </li>
+    );
+  }
+
   return (
     <>
       <div className="border-b-2 bg-gray-100 shadow-md ">
@@ -49,6 +59,10 @@ export const Navbar = () => {
               <li>
                 <Link href="/aboutus">About</Link>
               </li>
+              <Feed />
+              {/* <li>
+                <Link href="/company">Companies</Link>
+              </li> */}
               <li className="flex gap-6">
                 <AuthenticatedTemplate>
                   <WelcomeUser />
