@@ -11,10 +11,7 @@ export function signInClickHandler(instance: IPublicClientApplication): void {
       authority: "https://login.microsoftonline.com/uwindsor.ca",
       prompt: "select_account",
       loginHint: "@uwindsor.ca",
-      redirectUri:
-        "http://localhost:3000/" ||
-        "https://lancersview-git-dev-abhishekpatelmc.vercel.app/" ||
-        "https://lancersview.vercel.app/",
+      redirectUri: process.env.NEXTAUTH_URL,
     })
     .then((e) => {
       if (e.account?.username.endsWith("@uwindsor.ca")) {
@@ -50,10 +47,7 @@ export async function signOutClickHandler(
 
   const logoutRequest = {
     account: instance.getAccountByHomeId(String(homeAccID)),
-    postLogoutRedirectUri:
-      "http://localhost:3000/" ||
-      "https://lancersview-git-dev-abhishekpatelmc.vercel.app/" ||
-      "https://lancersview.vercel.app/",
+    postLogoutRedirectUri: process.env.NEXTAUTH_URL,
   };
   await instance.logoutPopup(logoutRequest);
 }
