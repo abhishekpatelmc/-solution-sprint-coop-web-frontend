@@ -33,4 +33,16 @@ export type Interview = {
   modified_date: Date;
 }
 
+export type Job ={
+  _id: string,
+  company_id: string,
+  job_title: string,
+  term: string,
+  location: string,
+  job_link: string,
+  multiple_jobs_available: boolean,
+  category: string,
+  open_status: boolean
+}
+
 
