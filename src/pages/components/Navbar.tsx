@@ -41,6 +41,16 @@ export const Navbar = () => {
     );
   }
 
+  function Feed() {
+    return (
+      <li>
+        <AuthenticatedTemplate>
+          <Link href="/feed">Add Post</Link>
+        </AuthenticatedTemplate>
+      </li>
+    );
+  }
+
   return (
     <>
       <div className="border-b-2 shadow-md">
@@ -65,6 +75,7 @@ export const Navbar = () => {
               <li>
                 <Link href="/company">Companies</Link>
               </li>
+              <Feed />
               <li>
                 <AuthenticatedTemplate>
                   <WelcomeUser />
