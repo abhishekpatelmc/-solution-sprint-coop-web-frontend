@@ -29,7 +29,6 @@ const Index = () => {
 
   const router = useRouter();
   const query = router.query;
-  const companyId = query.company_id as string 
   const companyId = query.company_id as string;
 
   //Jaiman Code
@@ -37,7 +36,6 @@ const Index = () => {
 
   const accounts = msalInstance.getAllAccounts();
   const { instance } = useMsal();
-
 
   useEffect(() => {
     console.log("Acc Node ::", accounts, accounts.length);
@@ -85,16 +83,15 @@ const Index = () => {
           console.log(err);
         });
 
-      fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/jobs/top/${companyId}`)
-          .then((res) => res.json())
-          .then((data: Job[]) => {
-            setTopJobs(data);
-            setLoadingJob(false);
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/jobs/top/${companyId}`)
+        .then((res) => res.json())
+        .then((data: Job[]) => {
+          setTopJobs(data);
+          setLoadingJob(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [companyId]);
 
@@ -220,23 +217,25 @@ const Index = () => {
                 Current Openings
               </div>
               {topJobs.map((job) => {
-                return(
+                return (
                   <Link
                     href={job?.job_link || ""}
                     className="flex justify-between rounded-xl border-2 p-2"
                   >
-                    <span className="font-semibold text-violet-800 underline">{job.job_title}</span>
+                    <span className="font-semibold text-violet-800 underline">
+                      {job.job_title}
+                    </span>
                     <span>{job.term}</span>
                   </Link>
-                   )  
+                );
               })}
               <div>
                 <Link
-                    href={""}
-                    className="flex justify-center rounded-xl p-2 font-semibold text-violet-800 underline"
-                  >
-                    <span>View more jobs...</span>
-                  </Link>
+                  href={""}
+                  className="flex justify-center rounded-xl p-2 font-semibold text-violet-800 underline"
+                >
+                  <span>View more jobs...</span>
+                </Link>
               </div>
             </div>
           </div>
