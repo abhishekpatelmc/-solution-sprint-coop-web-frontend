@@ -2,10 +2,10 @@ import { type NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
-import bannerImg from "public/images/get_hired.png";
-import type { Company } from "../types";
+import bannerImg from "../../public/getHired.png";
+import { Company } from "../types";
 
 const Home: NextPage = () => {
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
@@ -44,27 +44,25 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <div>
-        <Image
-          src={bannerImg}
-          alt="Banner Image"
-          className="w-full"
-        />
-        
-        <div className="my-5 mx-10">
-          <span className="text-4xl font-bold text-gray-50">Top Companies</span>
-        </div>
-        <div className="mx-10 mb-10 flex space-x-3">
-          {topCompanies.map((company) => (
-            <Link
-              key={company.company_name}
-              href={{
-                pathname: '/company',
-                query: {company_id: company._id},
-              }}
-              className={
-                "flex justify-center items-center rounded-xl bg-white bg-gradient-to-t p-3 text-base text-gray-600 shadow-xl transition duration-300 ease-in-out hover:scale-110"
-              }
-            >
+          <Image src={bannerImg} alt="Banner Image" className="w-full" />
+
+          <div className="my-5 mx-10">
+            <span className="text-4xl font-bold text-gray-50">
+              Top Companies
+            </span>
+          </div>
+          <div className="mx-10 mb-10 flex space-x-3">
+            {topCompanies.map((company) => (
+              <Link
+                key={company.company_name}
+                href={{
+                  pathname: "/company",
+                  query: { company_id: company._id },
+                }}
+                className={
+                  "flex items-center justify-center rounded-xl bg-white bg-gradient-to-t p-3 text-base text-gray-600 shadow-xl transition duration-300 ease-in-out hover:scale-110"
+                }
+              >
                 <Image
                   src={company.logo_image_url}
                   width={200}

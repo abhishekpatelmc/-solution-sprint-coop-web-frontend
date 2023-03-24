@@ -9,13 +9,20 @@
     "start": "next start"
   },
   "dependencies": {
+    "@azure/msal-browser": "^2.34.0",
+    "@azure/msal-react": "^1.5.4",
+    "bootstrap": "^5.2.3",
     "moment": "^2.29.4",
     "next": "13.1.2",
-    "next-auth": "^4.18.7",
+    "next-auth": "^4.20.1",
+    "nextjs-toast": "^1.0.4",
     "react": "18.2.0",
+    "react-bootstrap": "^2.7.2",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
     "react-moment": "^1.1.3",
+    "react-toastify": "^9.1.1",
     "zod": "^3.20.2"
   },
   "devDependencies": {
