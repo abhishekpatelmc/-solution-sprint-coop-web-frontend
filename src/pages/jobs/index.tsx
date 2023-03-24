@@ -1,12 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
 
-type Props = {};
-
-const index = (props: Props) => {
+const index = () => {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar />
       <div>
         <h1 className="mt-4 text-center text-4xl font-bold tracking-wide text-gray-700 antialiased ">
           Jobs
@@ -16,7 +14,7 @@ const index = (props: Props) => {
             <p>Site is under construction. Please check back later.</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

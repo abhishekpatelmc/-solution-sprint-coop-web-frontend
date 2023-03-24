@@ -99,8 +99,10 @@ const Home: NextPage = () => {
                     }}
                     className="relative mx-auto flex max-w-xs flex-col space-y-3 rounded-xl border border-white bg-white p-3 shadow-lg transition duration-300 ease-in-out hover:scale-105 md:max-w-3xl md:flex-row md:space-x-5 md:space-y-0"
                   >
-                    <div className="grid w-full place-items-center bg-white md:w-1/3">
-                      <img
+                    <div className="grid w-full place-items-center bg-white md:w-96">
+                      <Image
+                        width={300}
+                        height={300}
                         src={comp.logo_image_url}
                         alt="company images"
                         className="rounded-xl"

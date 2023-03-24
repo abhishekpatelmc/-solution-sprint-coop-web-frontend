@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Moment from "react-moment";
 import { SlLike, SlDislike } from "react-icons/sl";
-import { ImLocation, ImCross } from "react-icons/im";
-import { GiSpiderWeb } from "react-icons/Gi";
-import { TiTick } from "react-icons/Ti";
+import { ImLocation } from "react-icons/im";
+import { BiWorld } from "react-icons/bi";
+import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import { BsCircleFill } from "react-icons/bs";
 import Navbar from "../components/Navbar";
 import type { Company, Interview, Job } from "../../types";
@@ -12,12 +12,12 @@ import Link from "next/link";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { msalConfig } from "../../authConfig";
 import { toast } from "react-toastify";
-import { signInClickHandler } from "../components/auth";
+import { signInClickHandler } from "../api/auth/auth";
 import { useMsal } from "@azure/msal-react";
 import { useRouter } from "next/router";
 
 const Index = () => {
-  const [company, setCompany] = useState<Company>();
+  const [company, setCompany] = useState<Company | undefined>();
   const [interviews, setInterviews] = useState<Interview[]>([]);
   const [topJobs, setTopJobs] = useState<Job[]>([]);
   const [isLoadingCompany, setLoadingCompany] = useState<boolean>(true);
@@ -34,61 +34,62 @@ const Index = () => {
   const { instance } = useMsal();
 
   useEffect(() => {
-    console.log("Acc Node ::", accounts, accounts.length);
-    if (!accounts || accounts.length === 0) {
-      toast("Please Sign In First", {
-        hideProgressBar: true,
-        autoClose: 4000,
-        type: "success",
-      });
-      try {
-        signInClickHandler(instance);
-        router.replace("/");
-      } catch (error) {
-        console.log(error);
+    async function fetchData() {
+      console.log("Acc Node ::", accounts, accounts.length);
+      if (!accounts || accounts.length === 0) {
+        toast("Please Sign In First", {
+          hideProgressBar: true,
+          autoClose: 4000,
+          type: "success",
+        });
+        try {
+          signInClickHandler(instance);
+          await router.replace("/");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (!companyId) {
+        return;
+      }
+
+      if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
+        try {
+          const companyRes = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/company/${companyId}`
+          );
+          const companyData = (await companyRes.json()) as Company;
+          setCompany(companyData);
+          setLoadingCompany(false);
+        } catch (err) {
+          console.log(err);
+        }
+
+        try {
+          const interviewsRes = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews/${companyId}`
+          );
+          const interviewsData = (await interviewsRes.json()) as Interview[];
+          setInterviews(interviewsData);
+          setLoadingInterview(false);
+        } catch (err) {
+          console.log(err);
+        }
+
+        try {
+          const topJobsRes = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/jobs/top/${companyId}`
+          );
+          const topJobsData = (await topJobsRes.json()) as Job[];
+          setTopJobs(topJobsData);
+          setLoadingJob(false);
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
-    if (!companyId) {
-      return;
-    }
-
-    if (!companyId) {
-      return;
-    }
-
-    if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/company/${companyId}`)
-        .then((res) => res.json())
-        .then((data: Company) => {
-          setCompany(data);
-          setLoadingCompany(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/interviews/${companyId}`
-      )
-        .then((res) => res.json())
-        .then((data: Interview[]) => {
-          setInterviews(data);
-          setLoadingInterview(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/jobs/top/${companyId}`)
-        .then((res) => res.json())
-        .then((data: Job[]) => {
-          setTopJobs(data);
-          setLoadingJob(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    fetchData();
   }, [companyId, instance, router, accounts]);
 
   if (isLoadingCompany || isLoadingInterview || isLoadingJob) {
@@ -176,12 +177,12 @@ const Index = () => {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="align-center flex space-x-2 rounded-xl border-2 p-2">
-                  <ImLocation className="hover:fill-green-500" />
+                <div className="flex items-center space-x-2 rounded-xl border-2 p-2">
+                  <ImLocation size={28} className="hover:fill-green-500" />
                   <p className="font-semibold">{company?.location}</p>
                 </div>
-                <div className="flex space-x-2 rounded-xl border-2 p-2">
-                  <GiSpiderWeb className="hover:fill-green-500" />
+                <div className="flex items-center space-x-2 rounded-xl border-2 p-2">
+                  <BiWorld size={28} className="hover:fill-green-500" />
                   <Link
                     href={company?.website || ""}
                     className="font-semibold text-violet-800 underline"
@@ -259,16 +260,22 @@ const Index = () => {
                   <div className="flex items-center">
                     <p className="ml-1 font-bold text-gray-600">
                       {interview?.job_offer_flag == true ? (
-                        <span className="flex">
-                          <TiTick className="fill-green-500" size={42} />
+                        <span className="flex gap-1">
+                          <AiFillCheckCircle
+                            className="fill-green-500"
+                            size={24}
+                          />
                           <span className="font-normal text-gray-500 ">
                             {" "}
                             Received Offer
                           </span>
                         </span>
                       ) : (
-                        <span className="flex">
-                          <ImCross className="fill-red-500" />
+                        <span className="flex gap-1">
+                          <AiFillCloseCircle
+                            size={22}
+                            className="fill-red-500"
+                          />
                           <span className="font-normal text-gray-500 ">
                             {" "}
                             No Offer
@@ -280,18 +287,16 @@ const Index = () => {
                   <div className="flex items-center">
                     <p className="ml-1 font-bold text-gray-600">
                       {interview?.positive_flag == true ? (
-                        <span className="flex">
-                          <BsCircleFill className="fill-green-500" size={26} />
+                        <span className="flex gap-1">
+                          <BsCircleFill className="fill-green-500" size={20} />
                           <span className="font-normal text-gray-500 ">
-                            {" "}
                             Positive Experience
                           </span>
                         </span>
                       ) : (
-                        <span className="flex">
-                          <BsCircleFill className="fill-red-500" />
+                        <span className="flex gap-1">
+                          <BsCircleFill size={20} className="fill-red-500" />
                           <span className="font-normal text-gray-500 ">
-                            {" "}
                             Negative Experience
                           </span>
                         </span>
@@ -301,7 +306,7 @@ const Index = () => {
                   <div className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-yellow-500"
+                      className="h-6 w-6 text-yellow-500"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
