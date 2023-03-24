@@ -16,10 +16,20 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import Navbar from "../components/Navbar";
 import type { Company } from "../../types";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { msalConfig } from "../../authConfig";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const { Option } = Select;
 
 const Feed = () => {
+  const msalInstance = new PublicClientApplication(msalConfig);
+
+  const router = useRouter();
+
+  const accounts = msalInstance.getAllAccounts();
+
   const [questions, setQuestions] = useState<string[]>([""]);
   const [selectedCompany, setSelectedCompany] = useState("");
   const [selectedCompanyName, setSelectedCompanyName] = useState({});
@@ -49,17 +59,30 @@ const Feed = () => {
         },
         body: JSON.stringify({
           ...values,
+          user_id: accounts[0]?.homeAccountId,
           company_id: selectedCompany,
           comapany_name: selectedCompanyName,
-          questions: questions,
+          review: {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            desc: values.desc,
+            questions: questions,
+          },
         }),
       })
-        .then((res) => console.log(res))
+        .then((res) => {
+          console.log("Form res:", res);
+          toast("Your Response was successfull added!!", {
+            hideProgressBar: true,
+            autoClose: 4000,
+            type: "success",
+          });
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          router.push("/");
+        })
         .catch((err) => {
           console.log(err);
         });
     }
-    console.log("Received values of form: ", values);
   };
 
   const onAddQuestion = () => {
@@ -179,11 +202,18 @@ const Feed = () => {
                   <Checkbox>Yes</Checkbox>
                 </Form.Item>
                 <Form.Item
+                  label="Did you have a postive Experience?"
+                  name="positive_flag"
+                  valuePropName="checked"
+                >
+                  <Checkbox>Yes</Checkbox>
+                </Form.Item>
+                <Form.Item
                   label="Rating of Interview (1-10)"
                   name="difficulty_rating"
                   rules={[{ required: true, message: "Please select rating!" }]}
                 >
-                  <Slider min={1} max={10} marks={{ 1: "1", 10: "10" }} />
+                  <Slider min={0} max={10} marks={{ 0: "0", 10: "10" }} />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 20, span: 16 }}>
                   <Button type="default" htmlType="submit">
