@@ -1,6 +1,29 @@
 {
   "overrides": [
     {
+      "extends": "next",
+      "rules": {
+        "react/no-unescaped-entities": "off",
+        "@next/next/no-page-custom-font": "off"
+      }
+    },
+    {
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksConditionals": false
+        }
+      ]
+    },
+    {
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false
+        }
+      ]
+    },
+    {
       "extends": [
         "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
