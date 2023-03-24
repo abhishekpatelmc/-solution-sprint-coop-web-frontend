@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Moment from "react-moment";
 import { SlLike, SlDislike } from "react-icons/sl";
-import { ImLocation, ImCross } from "react-icons/im";
+import { ImLocation } from "react-icons/im";
 import { BiWorld } from "react-icons/bi";
-import { TiTick } from "react-icons/Ti";
+import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import { BsCircleFill } from "react-icons/bs";
 import Navbar from "../components/Navbar";
 import type { Company, Interview, Job } from "../../types";
@@ -260,16 +260,22 @@ const Index = () => {
                   <div className="flex items-center">
                     <p className="ml-1 font-bold text-gray-600">
                       {interview?.job_offer_flag == true ? (
-                        <span className="flex">
-                          <TiTick className="fill-green-500" size={42} />
+                        <span className="flex gap-1">
+                          <AiFillCheckCircle
+                            className="fill-green-500"
+                            size={24}
+                          />
                           <span className="font-normal text-gray-500 ">
                             {" "}
                             Received Offer
                           </span>
                         </span>
                       ) : (
-                        <span className="flex">
-                          <ImCross className="fill-red-500" />
+                        <span className="flex gap-1">
+                          <AiFillCloseCircle
+                            size={22}
+                            className="fill-red-500"
+                          />
                           <span className="font-normal text-gray-500 ">
                             {" "}
                             No Offer
@@ -281,18 +287,16 @@ const Index = () => {
                   <div className="flex items-center">
                     <p className="ml-1 font-bold text-gray-600">
                       {interview?.positive_flag == true ? (
-                        <span className="flex">
-                          <BsCircleFill className="fill-green-500" size={26} />
+                        <span className="flex gap-1">
+                          <BsCircleFill className="fill-green-500" size={20} />
                           <span className="font-normal text-gray-500 ">
-                            {" "}
                             Positive Experience
                           </span>
                         </span>
                       ) : (
-                        <span className="flex">
-                          <BsCircleFill className="fill-red-500" />
+                        <span className="flex gap-1">
+                          <BsCircleFill size={20} className="fill-red-500" />
                           <span className="font-normal text-gray-500 ">
-                            {" "}
                             Negative Experience
                           </span>
                         </span>
@@ -302,7 +306,7 @@ const Index = () => {
                   <div className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 text-yellow-500"
+                      className="h-6 w-6 text-yellow-500"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
