@@ -136,6 +136,7 @@ const Feed = () => {
 
   const onAddCons = () => {
     setCons((prevCons) => [...prevCons, ""]);
+    console.log("Cons");
   };
 
   const onChangeQuestion = (value: string, index: number) => {
