@@ -5,19 +5,15 @@ import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import { msalConfig } from "../authConfig";
 import "../styles/globals.css";
-import Navbar from "./components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   const msalInstance = new PublicClientApplication(msalConfig);
-
-  const [userName, setUserName] = useState("");
-
   const accounts = msalInstance.getAllAccounts();
   useEffect(() => {
     if (!accounts || accounts.length === 0) {

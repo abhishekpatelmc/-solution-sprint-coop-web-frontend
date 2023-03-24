@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Moment from "react-moment";
-
 import { SlLike, SlDislike } from "react-icons/sl";
 import { ImLocation, ImCross } from "react-icons/im";
 import { GiSpiderWeb } from "react-icons/Gi";
@@ -12,11 +11,9 @@ import type { Company, Interview, Job } from "../../types";
 import Link from "next/link";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { msalConfig } from "../../authConfig";
-
 import { toast } from "react-toastify";
 import { signInClickHandler } from "../components/auth";
 import { useMsal } from "@azure/msal-react";
-
 import { useRouter } from "next/router";
 
 const Index = () => {
@@ -33,7 +30,6 @@ const Index = () => {
 
   //Jaiman Code
   const msalInstance = new PublicClientApplication(msalConfig);
-
   const accounts = msalInstance.getAllAccounts();
   const { instance } = useMsal();
 
@@ -93,7 +89,7 @@ const Index = () => {
           console.log(err);
         });
     }
-  }, [companyId]);
+  }, [companyId, instance, router, accounts]);
 
   if (isLoadingCompany || isLoadingInterview || isLoadingJob) {
     return (
@@ -219,6 +215,7 @@ const Index = () => {
               {topJobs.map((job) => {
                 return (
                   <Link
+                    key={job._id}
                     href={job?.job_link || ""}
                     className="flex justify-between rounded-xl border-2 p-2"
                   >
