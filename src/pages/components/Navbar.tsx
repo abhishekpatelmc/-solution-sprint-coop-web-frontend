@@ -1,7 +1,8 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaRegUserCircle, FaUserCircle } from "react-icons/fa";
+import { FaRegUserCircle } from "react-icons/fa";
 import { signInClickHandler, signOutClickHandler } from "../api/auth/auth";
+import Avatar from "boring-avatars";
 
 // JJ Code Start
 import {
@@ -9,7 +10,6 @@ import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
-
 // JJ Code End
 
 export const Navbar = () => {
@@ -22,8 +22,8 @@ export const Navbar = () => {
   function WelcomeUser() {
     // setUserName(String(accounts[0]?.username));
     setName(String(accounts[0]?.name));
+    console.log("Is User :", name.substring(0, name.indexOf(" ")));
     console.log("Is User :", name);
-    // console.log("Is User :", userName);
     return <p>Welcome, {name.substring(0, name.indexOf(" "))}</p>;
   }
 
@@ -73,7 +73,18 @@ export const Navbar = () => {
                     className="flex gap-2 hover:text-red-400"
                   >
                     <p className="text-lg">Sign Out</p>
-                    <FaUserCircle size={26} />
+                    <Avatar
+                      size={27}
+                      name={name.substring(0, name.indexOf(" ")) || "User"}
+                      variant="beam"
+                      colors={[
+                        "#92A1C6",
+                        "#146A7C",
+                        "#F0AB3D",
+                        "#C271B4",
+                        "#C20D90",
+                      ]}
+                    />
                   </button>
                 </AuthenticatedTemplate>
                 <UnauthenticatedTemplate>
