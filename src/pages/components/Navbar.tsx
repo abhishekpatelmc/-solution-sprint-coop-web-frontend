@@ -23,7 +23,7 @@ export const Navbar = () => {
     // setUserName(String(accounts[0]?.username));
     setName(String(accounts[0]?.name));
     console.log("Is User :", name.substring(0, name.indexOf(" ")));
-    // console.log("Is User :", userName);
+    console.log("Is User :", name);
     return <p>Welcome, {name.substring(0, name.indexOf(" "))}</p>;
   }
 
