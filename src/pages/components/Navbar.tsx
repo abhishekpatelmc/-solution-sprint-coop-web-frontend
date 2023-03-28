@@ -10,7 +10,6 @@ import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
-
 // JJ Code End
 
 export const Navbar = () => {
