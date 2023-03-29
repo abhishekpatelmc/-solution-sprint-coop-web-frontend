@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { signInClickHandler, signOutClickHandler } from "../api/auth/auth";
 import Avatar from "boring-avatars";
@@ -19,12 +19,17 @@ export const Navbar = () => {
 
   // JJ Code
   const { accounts } = useMsal();
-  function WelcomeUser() {
+
+  useEffect(() => {
+    if (accounts[0]?.name !== undefined) {
+      setName(accounts[0].name.split(" ")[0] as string);
+      console.log("Is User :", accounts[0].name.split(" ")[0]);
+    }
+  }, [accounts]);
+  function WelcomeUser({ name }: { name: string }) {
     // setUserName(String(accounts[0]?.username));
-    setName(String(accounts[0]?.name));
-    console.log("Is User :", name.substring(0, name.indexOf(" ")));
-    console.log("Is User :", name);
-    return <p>Welcome, {name.substring(0, name.indexOf(" "))}</p>;
+    console.log("Is Name :", name);
+    return <p>Welcome, {name}</p>;
   }
 
   function Feed() {
@@ -65,7 +70,7 @@ export const Navbar = () => {
               </li> */}
               <li className="flex gap-6">
                 <AuthenticatedTemplate>
-                  <WelcomeUser />
+                  <WelcomeUser name={name} />
                   {/* <SignOutButton /> */}
                   <button
                     type="button"
@@ -75,7 +80,7 @@ export const Navbar = () => {
                     <p className="text-lg">Sign Out</p>
                     <Avatar
                       size={27}
-                      name={name.substring(0, name.indexOf(" ")) || "User"}
+                      name={name}
                       variant="beam"
                       colors={[
                         "#92A1C6",
