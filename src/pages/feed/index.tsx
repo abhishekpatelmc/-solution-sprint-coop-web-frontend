@@ -38,7 +38,10 @@ const Feed = () => {
   const [cons, setCons] = useState<string[]>([""]);
   const [selectedCompany, setSelectedCompany] = useState("");
   const [selectedCompanyName, setSelectedCompanyName] = useState({});
+  const [selectedField, setSelectedField] = useState<string>("");
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
+
+  const allFields: string[] = ['Computer Science', 'Data Analytics', 'Finance', 'Accounting', 'Mechanical', 'Civil', 'Education', 'Biology', 'Electronics', 'Psycology']
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
@@ -67,6 +70,7 @@ const Feed = () => {
           user_id: accounts[0]?.homeAccountId,
           company_id: selectedCompany,
           comapany_name: selectedCompanyName,
+          job_field: selectedField,
           review: {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             desc: values.desc,
@@ -102,6 +106,7 @@ const Feed = () => {
           user_id: accounts[0]?.homeAccountId,
           company_id: selectedCompany,
           comapany_name: selectedCompanyName,
+          job_field: selectedField,
           review: {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             desc: values.desc,
@@ -168,6 +173,10 @@ const Feed = () => {
     setSelectedCompanyName(value);
   };
 
+  const handleField = (value: string) => {
+    setSelectedField(value);
+  }
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -211,6 +220,25 @@ const Feed = () => {
             >
               <Input placeholder="Enter job title" />
             </Form.Item>
+            {/** Added new code here */}
+            <Form.Item
+              label="Which field did you work in?"
+              name="job_field"
+              rules={[{ required: true, message: "Please input your field!" }]}
+            >
+              <Select
+                placeholder="Select a field"
+                onChange={(value) => handleField(value)}
+                value={selectedField}
+              >
+                {allFields.map((field, index) => (
+                  <Option key={index} value={field}>
+                    {field}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+
             <Form.Item
               label="Date of Interview"
               name="interview_date"
@@ -324,6 +352,25 @@ const Feed = () => {
               rules={[{ required: true, message: "Please input job title!" }]}
             >
               <Input placeholder="Enter job title" />
+            </Form.Item>
+
+            {/** Added new code here */}
+            <Form.Item
+              label="Which field did you work in?"
+              name="job_field"
+              rules={[{ required: true, message: "Please input your field!" }]}
+            >
+              <Select
+                placeholder="Select a field"
+                onChange={(value) => handleField(value)}
+                value={selectedField}
+              >
+                {allFields.map((field, index) => (
+                  <Option key={index} value={field}>
+                    {field}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
 
             <Form.Item
