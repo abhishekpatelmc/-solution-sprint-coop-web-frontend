@@ -64,7 +64,11 @@ export const Navbar = () => {
               <li>
                 <Link href="/aboutus">About</Link>
               </li>
-              <Feed />
+              <li>
+                <AuthenticatedTemplate>
+                  <Link href="/feed">Add Post</Link>
+                </AuthenticatedTemplate>
+              </li>
               {/* <li>
                 <Link href="/company">Companies</Link>
               </li> */}

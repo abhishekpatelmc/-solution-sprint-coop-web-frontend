@@ -31,7 +31,8 @@ const Index = () => {
 
   /* Searching and Filtering States*/
   const [interviewClicked, setInterviewClicked] = useState<boolean>(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [jobFieldFilter, setJobFieldFilter] = useState<string>("");
 
   /* Router parameters*/
   const router = useRouter();
@@ -272,13 +273,28 @@ const Index = () => {
                 placeholder="Search Job Titles"
                 onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
               />
+              <select onChange={(e) => setJobFieldFilter(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected value="">All Fields</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Data Analytics">Data Analytics</option>
+                <option value="Finance">Finance</option>
+                <option value="Accounting">Accounting</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Civil">Civil</option>
+                <option value="Education">Education</option>
+                <option value="Biology">Biology</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Psycology">Psycology</option>
+              </select>
             </div>
             {/* Inner div with options */}
             {/* Conditional render */}
             { interviewClicked ? 
             interviews
-            .filter((filtered) =>
-                filtered.job_title.toLowerCase().includes(searchQuery))
+            .filter((filtered) => {
+              return filtered.job_title.toLowerCase().includes(searchQuery) 
+              && jobFieldFilter ? filtered.job_field === jobFieldFilter: filtered
+            })
             .map((interview) => (
               <div
                 key={interview._id}
