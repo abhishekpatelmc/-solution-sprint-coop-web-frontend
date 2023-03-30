@@ -6,12 +6,11 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import bannerImg from "../../public/getHired.png";
 import type { Company } from "../types";
-import { IoSearchOutline, IoCloseCircleOutline } from "react-icons/io5";
 
 const Home: NextPage = () => {
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
   const [topCompanies, setTopCompanies] = useState<Company[]>([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
@@ -76,13 +75,12 @@ const Home: NextPage = () => {
           </div>
           <div className="mb-10 flex justify-center">
             <div className="flex flex-row items-center gap-2">
-              <IoSearchOutline size={30} />
+              <p>Have an employer in mind?</p>
               <input
                 className="h-10 w-96 rounded-lg px-2 py-1 text-center text-base"
                 placeholder="Search companies or locations"
                 onChange={(e) => setQuery(e.target.value.toLowerCase())}
               />
-              <IoCloseCircleOutline size={28} />
             </div>
           </div>
 
