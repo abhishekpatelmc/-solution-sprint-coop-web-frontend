@@ -3,6 +3,10 @@ export type Company = {
   company_name: string;
   location: string;
   website: string;
+  company_size: string;
+  company_founded: string;
+  industry: string;
+  company_type: string;
   logo_image_url: string;
   review_count: number;
   interview_count: number;
@@ -24,6 +28,7 @@ export type Interview = {
   company_id: string;
   title: string;
   job_title: string;
+  job_field: string;
   interview_date: Date;
   review: ReviewDesc;
   positive_flag: boolean;
@@ -34,15 +39,36 @@ export type Interview = {
 }
 
 export type Job ={
-  _id: string,
-  company_id: string,
-  job_title: string,
-  term: string,
-  location: string,
-  job_link: string,
-  multiple_jobs_available: boolean,
-  category: string,
-  open_status: boolean
+  _id: string;
+  company_id: string;
+  job_title: string;
+  term: string;
+  location: string;
+  job_link: string;
+  multiple_jobs_available: boolean;
+  category: string;
+  open_status: boolean;
+}
+
+type CritiqueDesc = {
+  desc: string;
+  pros: string[];
+  cons: string[];
+  _id: string;
+}
+
+export type Critique = {
+  _id: string;
+  user_id: string;
+  job_title: string;
+  job_field: string;
+  months_length: number;
+  review: CritiqueDesc;
+  likes: number,
+  dislikes: number,
+  rating: number,
+  created_date: Date,
+  modified_date: Date;
 }
 
 
