@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { Fragment } from "react";
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 import { Menu, Transition } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
 import { signInClickHandler, signOutClickHandler } from "../api/auth/auth";
 import Avatar from "boring-avatars";
-import lancerImage from "../../../public/images/lancer.svg";
+import lancerImage from "../../../public/lancer.svg";
 
 // JJ Code Start
 import {
@@ -39,16 +40,6 @@ export const Navbar = () => {
     );
   }
 
-  function Feed() {
-    return (
-      <li>
-        <AuthenticatedTemplate>
-          <Link href="/feed">Add Post</Link>
-        </AuthenticatedTemplate>
-      </li>
-    );
-  }
-
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
   }
@@ -59,7 +50,7 @@ export const Navbar = () => {
         <nav className="mx-14 flex h-20 flex-row items-center justify-between text-xl text-gray-50">
           <div className="flex basis-1/5 items-center gap-1">
             <Image
-              src={lancerImage}
+              src={lancerImage as StaticImageData}
               alt="Lancer's View Logo"
               width={28}
               height={28}
