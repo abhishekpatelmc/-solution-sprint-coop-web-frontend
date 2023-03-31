@@ -6,12 +6,41 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import bannerImg from "../../public/getHired.png";
 import type { Company } from "../types";
-import { IoSearchOutline, IoCloseCircleOutline } from "react-icons/io5";
+import ReactPaginate from "react-paginate";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 const Home: NextPage = () => {
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
   const [topCompanies, setTopCompanies] = useState<Company[]>([]);
-  const [query, setQuery] = useState("");
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const [query, setQuery] = useState<string>("");
+
+  const handlePageClick = (event: { selected: number; }) => {
+    const newOffset = (event.selected * 5) % topCompanies.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
+  const paginationVariants = {
+    hidden: {
+      opacity: 0,
+      y: 200,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+        duration: 2,
+      },
+    },
+  };
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
@@ -37,7 +66,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className="h-full bg-[url('../../public/images/back.svg')] bg-cover bg-center bg-no-repeat">
+    <div className="min-h-screen bg-cyan-600 bg-[url('../../public/images/back.svg')] bg-cover bg-center">
       <Navbar />
       <Head>
         <title>Lancer&apos;s View</title>
@@ -76,21 +105,21 @@ const Home: NextPage = () => {
           </div>
           <div className="mb-10 flex justify-center">
             <div className="flex flex-row items-center gap-2">
-              <IoSearchOutline size={30} />
+              <p>Have an employer in mind?</p>
               <input
                 className="h-10 w-96 rounded-lg px-2 py-1 text-center text-base"
                 placeholder="Search companies or locations"
                 onChange={(e) => setQuery(e.target.value.toLowerCase())}
               />
-              <IoCloseCircleOutline size={28} />
             </div>
           </div>
 
-          <div className="mx-10 h-screen space-y-4">
+          <div className="mx-10 flex-row space-y-4">
             {allCompanies
               .filter((filtered) =>
                 filtered.company_name.toLowerCase().includes(query)
               )
+              .slice()
               .map((comp) => (
                 <div key={comp._id} className="flex flex-col justify-center">
                   <Link
@@ -177,6 +206,31 @@ const Home: NextPage = () => {
                 </div>
               ))}
           </div>
+          <motion.div
+            variants={paginationVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <ReactPaginate
+              breakLabel={<span className="mr-4">...</span>}
+              nextLabel={
+                  <span className="w-10 h-10 flex items-center justify-center bg-lightGray rounded-md">
+                    <BsChevronRight />
+                  </span>
+              }
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              pageCount={10}
+              previousLabel={
+                  <span className="w-10 h-10 flex items-center justify-center bg-lightGray rounded-md mr-4">
+                    <BsChevronLeft />
+                  </span>
+              }
+              containerClassName="flex items-center justify-center mt-8 mb-4"
+              pageClassName="block border- border-solid border-lightGray hover:bg-lightGray w-10 h-10 flex items-center justify-center rounded-md mr-4"
+              activeClassName="bg-purple text-white"
+            />
+          </motion.div>
         </div>
       </main>
     </div>
