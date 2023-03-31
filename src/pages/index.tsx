@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
   const [query, setQuery] = useState<string>("");
 
-  const itemsPerPage: number = 5;
+  const itemsPerPage = 5;
 
   const handlePageClick = (event: { selected: number; }) => {
     const newOffset = (event.selected * itemsPerPage) % topCompanies.length;
