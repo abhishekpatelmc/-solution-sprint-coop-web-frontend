@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import { msalConfig } from "../authConfig";
+import "typeface-karla";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
