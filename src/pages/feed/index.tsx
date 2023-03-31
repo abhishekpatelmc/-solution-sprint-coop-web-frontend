@@ -42,7 +42,18 @@ const Feed = () => {
   const [selectedField, setSelectedField] = useState<string>("");
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
 
-  const allFields: string[] = ['Computer Science', 'Data Analytics', 'Finance', 'Accounting', 'Mechanical', 'Civil', 'Education', 'Biology', 'Electronics', 'Psycology']
+  const allFields: string[] = [
+    "Computer Science",
+    "Data Analytics",
+    "Finance",
+    "Accounting",
+    "Mechanical",
+    "Civil",
+    "Education",
+    "Biology",
+    "Electronics",
+    "Psycology",
+  ];
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
@@ -176,7 +187,7 @@ const Feed = () => {
 
   const handleField = (value: string) => {
     setSelectedField(value);
-  }
+  };
 
   const items: TabsProps["items"] = [
     {
