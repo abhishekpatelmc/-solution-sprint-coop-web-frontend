@@ -5,11 +5,18 @@ import type { MenuProps } from "antd";
 import type { Job, Company } from "../../types";
 import moment from "moment";
 import Link from "next/link";
+import Footer from "../components/Footer";
 
 const Index = () => {
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
   const [selectedCompany, setSelectedCompany] = useState<Job[]>([]);
   const SOTI = "63eeacac00f301f10c83ba7d"; //Hardcoded SOTI company_id
+
+  const { Title } = Typography;
+
+  const { Panel } = Collapse;
+
+  const { Header, Content, Sider } = Layout;
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
@@ -45,12 +52,6 @@ const Index = () => {
     }
   };
 
-  const { Title } = Typography;
-
-  const { Panel } = Collapse;
-
-  const { Header, Content, Sider } = Layout;
-
   const onClick: MenuProps["onClick"] = (companies) => {
     getCompaniesById(companies.key);
   };
@@ -70,19 +71,6 @@ const Index = () => {
     <div className="h-screen bg-[url('../../public/images/back.svg')] bg-cover bg-center bg-no-repeat">
       <Navbar />
       <Layout>
-        <Header className="header">
-          <div>
-            <Title
-              style={{
-                color: "white",
-                paddingTop: "5px",
-                paddingRight: "20px",
-              }}
-            >
-              Job Postings
-            </Title>
-          </div>
-        </Header>
         <Layout>
           <Sider width={200}>
             <Menu
@@ -93,7 +81,7 @@ const Index = () => {
               items={items?.length > 0 ? items : []}
             />
           </Sider>
-          <Layout style={{ padding: "0 24px 24px" }}>
+          <Layout style={{ padding: "0 24px 24px", paddingTop: "20px" }}>
             <Content>
               <Collapse
                 accordion
@@ -161,6 +149,7 @@ const Index = () => {
           </Layout>
         </Layout>
       </Layout>
+      <Footer />
     </div>
   );
 };

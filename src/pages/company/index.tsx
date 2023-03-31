@@ -89,6 +89,14 @@ const Index = () => {
           console.log(error);
         }
       }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    fetchData();
+  }, [instance]);
+
+  useEffect(() => {
+    async function fetchData() {
+      console.log("Acc Node ::", accounts, accounts.length);
       if (!companyId) {
         return;
       }
@@ -287,7 +295,7 @@ const Index = () => {
               })}
               <div>
                 <Link
-                  href={""}
+                  href={"/jobs"}
                   className="flex justify-center rounded-xl p-2 font-semibold text-violet-800 underline"
                 >
                   <span>View more jobs...</span>
