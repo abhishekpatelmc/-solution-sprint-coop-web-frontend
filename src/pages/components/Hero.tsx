@@ -1,14 +1,13 @@
 const links = [
-  { name: "Open roles", href: "#" },
-  { name: "Internship program", href: "#" },
-  { name: "Our values", href: "#" },
-  { name: "Meet our leadership", href: "#" },
+  { name: "Open Coop Roles", href: "/jobs" },
+  { name: "Internship program", href: "/jobs" },
+  { name: "Our values", href: "/aboutus" },
 ];
 const stats = [
-  { name: "Offices worldwide", value: "12" },
-  { name: "Full-time colleagues", value: "300+" },
-  { name: "Hours per week", value: "40" },
-  { name: "Paid time off", value: "Unlimited" },
+  { name: "Companies Hiring", value: "10" },
+  { name: "Interview Experiences", value: "300+" },
+  { name: "Open Jobs", value: "40+" },
+  { name: "UWin Departments Covered", value: "10" },
 ];
 
 export default function Example() {
@@ -46,12 +45,10 @@ export default function Example() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            Work with us
+            UWin's Co-op Hub
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-300">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-            fugiat aliqua.
+          Welcome to the Co-op Interview Experience Hub, your comprehensive guide to landing your dream co-op through shared experiences. Join our community today and gain valuable insights and expert advice to confidently tackle any co-op interview and succeed.
           </p>
         </div>
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
