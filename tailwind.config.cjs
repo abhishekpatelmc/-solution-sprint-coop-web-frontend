@@ -4,11 +4,10 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'hero': "url('/public/images/cool.png')",
+        hero: "url('/public/images/cool.png')",
       },
       fontFamily: {
-        sans: ['Graphik', 'sans-serif'],
-        serif: ['Merriweather', 'serif'],
+        sans: ["Karla"],
       },
     },
   },
