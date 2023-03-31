@@ -121,11 +121,11 @@ const Home: NextPage = () => {
                         pathname: "/company",
                         query: { company_id: comp._id },
                       }}
-                      className="relative mx-auto flex max-w-xs flex-col rounded-xl border border-white bg-white px-6 shadow-xl shadow-slate-300 transition duration-300 ease-in-out hover:scale-105 md:max-w-3xl md:flex-row md:space-x-5 md:space-y-0"
+                      className="relative mx-auto flex max-w-xs flex-col rounded-xl border border-white bg-white px-8 shadow-xl shadow-slate-300 transition duration-300 ease-in-out hover:scale-105 md:max-w-3xl md:flex-row md:space-x-5 md:space-y-0"
                     >
-                      <div className="grid w-full place-items-center bg-white py-4 px-4 md:w-96">
+                      <div className="grid w-full place-items-center bg-white  py-8 px-6 md:w-96">
                         <Image
-                          width={300}
+                          width={320}
                           height={200}
                           src={comp.logo_image_url}
                           alt="company images"
