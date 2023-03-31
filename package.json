@@ -11,9 +11,9 @@
   "dependencies": {
     "@azure/msal-browser": "^2.34.0",
     "@azure/msal-react": "^1.5.4",
-    "@types/moment": "^2.13.0",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.17",
+    "@types/moment": "^2.13.0",
     "antd": "^5.3.2",
     "boring-avatars": "^1.7.0",
     "framer-motion": "^10.10.0",
@@ -27,6 +27,7 @@
     "react-paginate": "^8.1.5",
     "react-toastify": "^9.1.1",
     "sharp": "^0.31.3",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "typeface-karla": "^1.1.13",
     "zod": "^3.20.2"
   },

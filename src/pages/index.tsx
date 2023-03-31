@@ -4,7 +4,6 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import bannerImg from "../../public/getHired.png";
 import type { Company } from "../types";
 import PaginationButtons from "./components/PaginationButtons";
 import Hero from "./components/Hero";
@@ -81,7 +80,7 @@ const Home: NextPage = () => {
                   query: { company_id: company._id },
                 }}
                 className={
-                  "flex items-center justify-center rounded-xl bg-white bg-gradient-to-t py-4 px-12 text-base shadow-2xl  transition duration-300 ease-in-out hover:scale-110"
+                  "flex items-center justify-center rounded-xl bg-white bg-gradient-to-t py-4 px-12 text-base shadow-2xl shadow-slate-400 transition duration-300 ease-in-out hover:scale-110"
                 }
               >
                 <Image
@@ -119,7 +118,7 @@ const Home: NextPage = () => {
                       pathname: "/company",
                       query: { company_id: comp._id },
                     }}
-                    className="relative mx-auto flex max-w-xs flex-col space-y-3 rounded-xl border border-white bg-white p-3 shadow-lg transition duration-300 ease-in-out hover:scale-105 md:max-w-3xl md:flex-row md:space-x-5 md:space-y-0"
+                    className="relative mx-auto flex max-w-xs flex-col space-y-3 rounded-xl border border-white bg-white p-3 shadow-xl shadow-slate-300 transition duration-300 ease-in-out hover:scale-105 md:max-w-3xl md:flex-row md:space-x-5 md:space-y-0"
                   >
                     <div className="grid w-full place-items-center bg-white md:w-96">
                       <Image
