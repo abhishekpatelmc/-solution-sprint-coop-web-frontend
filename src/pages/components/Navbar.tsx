@@ -8,20 +8,17 @@ import { signInClickHandler, signOutClickHandler } from "../api/auth/auth";
 import Avatar from "boring-avatars";
 import lancerImage from "../../../public/lancer.svg";
 
-// JJ Code Start
 import {
   useMsal,
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
-// JJ Code End
 
 export const Navbar = () => {
   const { instance } = useMsal();
   // const [userName, setUserName] = useState("");
   const [name, setName] = useState("");
 
-  // JJ Code
   const { accounts } = useMsal();
 
   useEffect(() => {
@@ -42,6 +39,21 @@ export const Navbar = () => {
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
+  }
+
+  function Jobs() {
+    return (
+      <li>
+        <AuthenticatedTemplate>
+          <Link
+            href="/jobs"
+            className="px-2 hover:border-b-2 hover:pb-2 hover:outline-gray-50 "
+          >
+            Jobs
+          </Link>
+        </AuthenticatedTemplate>
+      </li>
+    );
   }
 
   return (
@@ -79,6 +91,7 @@ export const Navbar = () => {
                   </Link>
                 </AuthenticatedTemplate>
               </li>
+              <Jobs />
               <li>
                 <UnauthenticatedTemplate>
                   <button
