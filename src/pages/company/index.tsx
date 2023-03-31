@@ -169,14 +169,14 @@ const Index = () => {
     );
   } else {
     return (
-      <div className=" bg-slate-100 bg-cover bg-center bg-no-repeat text-slate-800">
+      <div className=" bg-slate-100 bg-cover bg-center bg-no-repeat text-slate-800 scrollbar-hide">
         <Navbar />
         {/* Main div */}
-        <div className="m-5 flex flex-row">
+        <div className="ml-10 mr-4 mt-5 flex flex-row">
           {/* Left div - also acts a menu */}
           <div className="basis-1/4">
             {/* Inner div with options */}
-            <div className="align-center mt-5 flex-col justify-center space-y-4 rounded-xl bg-gray-50 p-4 shadow-xl shadow-slate-300">
+            <div className="align-center mt-5 flex-col justify-center space-y-4 rounded-xl bg-gray-50 p-6 pt-8 shadow-xl shadow-slate-300">
               <Image
                 src={
                   company?.logo_image_url ||
@@ -187,7 +187,7 @@ const Index = () => {
                 alt={""}
                 className="ml-auto mr-auto block rounded-xl"
               />
-              <div className="text-primary mt-0 mb-1 text-center text-3xl font-semibold leading-tight text-violet-800">
+              <div className="text-primary mt-2 mb-1 text-center text-3xl font-semibold text-violet-800">
                 {company?.company_name}
               </div>
               <div className="flex space-x-5">
@@ -223,7 +223,7 @@ const Index = () => {
                     </span>
                   </p>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 text-yellow-500"
@@ -240,42 +240,42 @@ const Index = () => {
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center space-x-2 rounded-xl border-2 p-2">
-                  <ImLocation size={28} className="hover:fill-green-500" />
-                  <p className="font-semibold text-slate-800">
+              <div className="flex   gap-4">
+                <div className="col-span-1 flex items-center space-x-2 rounded-xl border-2 border-slate-300 px-3 py-2">
+                  <ImLocation size={32} className="hover:fill-green-500" />
+                  <p className="text-md font-semibold text-slate-800">
                     {company?.location}
                   </p>
                 </div>
-                <div className="flex items-center space-x-2 rounded-xl border-2 p-2">
+                <div className="col-span-1 flex items-center space-x-2 rounded-xl border-2  border-slate-300  px-3 py-2">
                   <BiWorld size={28} className="hover:fill-green-500" />
                   <Link
                     href={company?.website || ""}
-                    className="font-semibold text-violet-800 underline"
+                    className="font-semibold hover:text-violet-800"
                   >
                     Company Website
                   </Link>
                 </div>
               </div>
-              <div className="flex space-x-2 rounded-xl border-2 p-2">
+              <div className="flex space-x-2 rounded-xl border-2 border-slate-300  p-2 px-3">
                 <span className="font-semibold">Size:</span>
                 <span>{company?.company_size} Employees</span>
               </div>
-              <div className="flex space-x-2 rounded-xl border-2 p-2">
+              <div className="flex space-x-2 rounded-xl border-2 border-slate-300  p-2 px-3">
                 <span className="font-semibold">Industry:</span>
                 <span>{company?.industry}</span>
               </div>
-              <div className="flex space-x-2 rounded-xl border-2 p-2">
+              <div className="flex space-x-2 rounded-xl border-2 border-slate-300  p-2 px-3">
                 <span className="font-semibold">Type:</span>
                 <span>{company?.company_type}</span>
               </div>
-              <div className="flex space-x-2 rounded-xl border-2 p-2">
+              <div className="flex space-x-2 rounded-xl border-2 border-slate-300  p-2 px-3">
                 <span className="font-semibold">Founded:</span>
                 <span>{company?.company_founded}</span>
               </div>
             </div>
 
-            <div className="align-center mt-5 flex-col justify-center space-y-4 rounded-xl  bg-gray-50 p-4 shadow-xl shadow-slate-300 ">
+            <div className="align-center mt-5 flex-col justify-center space-y-4 rounded-xl bg-gray-50 p-4 shadow-xl shadow-slate-300 ">
               <div className="text-primary mt-0 mb-1 text-center text-2xl font-semibold leading-tight">
                 Current Openings
               </div>
@@ -284,7 +284,7 @@ const Index = () => {
                   <Link
                     key={job._id}
                     href={job?.job_link || ""}
-                    className="flex justify-between rounded-xl border-2 p-2"
+                    className="flex justify-between rounded-xl border-2 border-slate-200 p-2 text-base"
                   >
                     <span className="font-semibold text-violet-800 underline">
                       {job.job_title}
@@ -304,32 +304,34 @@ const Index = () => {
             </div>
           </div>
           {/* Middle div */}
-          <div className="basis-3/4 space-y-5 p-5">
-            <div className="inline-flex">
-              <button
-                onClick={() => {
-                  setInterviewClicked(true);
-                }}
-                className="rounded-l bg-slate-300 py-2 px-5 font-bold text-slate-800 hover:bg-slate-200 focus:bg-slate-400"
-              >
-                Interviews
-              </button>
-              <button
-                onClick={() => {
-                  setInterviewClicked(false);
-                }}
-                className="rounded-r bg-slate-300 py-2 px-6 font-bold text-slate-800 hover:bg-slate-200 focus:bg-slate-400"
-              >
-                Reviews
-              </button>
+          <div className=" basis-3/4 space-y-5 p-5">
+            <div className="flex justify-between">
+              <div className="">
+                <button
+                  onClick={() => {
+                    setInterviewClicked(true);
+                  }}
+                  className="rounded-l-lg border-r-2 border-slate-700 bg-slate-300 py-2 px-5 font-bold text-slate-800 shadow-xl shadow-slate-400 hover:bg-slate-700 hover:text-gray-50 focus:bg-slate-700 focus:text-gray-50"
+                >
+                  Interviews
+                </button>
+                <button
+                  onClick={() => {
+                    setInterviewClicked(false);
+                  }}
+                  className="rounded-r-lg bg-slate-300 py-2 px-6 font-bold text-slate-800 shadow-xl shadow-slate-400 hover:bg-slate-700  hover:text-gray-50 focus:bg-slate-700 focus:text-gray-50"
+                >
+                  Reviews
+                </button>
+              </div>
               <input
-                className="mx-10 h-10 w-96 rounded-lg border border-slate-700 px-2 py-1 text-center text-base"
+                className="mx-10 h-10 w-5/12 rounded-lg px-2 py-1 text-center text-base shadow-xl shadow-slate-400"
                 placeholder="Search Job Titles"
                 onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
               />
               <select
                 onChange={(e) => setJobFieldFilter(e.target.value)}
-                className="w-100 block rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-sm text-slate-900 focus:border-blue-500 focus:ring-blue-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                className="block w-2/12 rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-sm text-slate-900 shadow-xl shadow-slate-400 focus:border-blue-500 focus:ring-blue-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               >
                 <option selected value="">
                   All Fields
@@ -375,13 +377,13 @@ const Index = () => {
                           date={interview.interview_date}
                         />
                       </p>
-                      <h1 className="text-2xl font-bold tracking-wide">
+                      <h1 className="mb-2 text-2xl font-bold tracking-wide">
                         {interview.job_title}
                         <span> Interview</span>
                       </h1>
                       <div className="flex space-x-5">
                         <div className="flex items-center">
-                          <p className="ml-1 font-bold text-slate-600">
+                          <p className=" font-bold text-slate-600">
                             {interview?.job_offer_flag == true ? (
                               <span className="flex gap-1">
                                 <AiFillCheckCircle

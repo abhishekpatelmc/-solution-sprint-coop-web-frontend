@@ -156,6 +156,11 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <div className="border-t border-gray-700 pb-4 pt-4">
+        <p className="text-base text-gray-400 xl:text-center">
+          © 2023 Solution Sprint. All rights reserved.
+        </p>
+      </div>
     </div>
   );
 }
