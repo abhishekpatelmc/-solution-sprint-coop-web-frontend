@@ -1,23 +1,24 @@
 import Link from "next/link";
+import { Fragment } from "react";
+import Image from "next/image";
+import type { StaticImageData } from "next/image";
+import { Menu, Transition } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
-import { FaRegUserCircle } from "react-icons/fa";
 import { signInClickHandler, signOutClickHandler } from "../api/auth/auth";
 import Avatar from "boring-avatars";
+import lancerImage from "../../../public/lancer.svg";
 
-// JJ Code Start
 import {
   useMsal,
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
-// JJ Code End
 
 export const Navbar = () => {
   const { instance } = useMsal();
   // const [userName, setUserName] = useState("");
   const [name, setName] = useState("");
 
-  // JJ Code
   const { accounts } = useMsal();
 
   useEffect(() => {
@@ -29,14 +30,27 @@ export const Navbar = () => {
   function WelcomeUser({ name }: { name: string }) {
     // setUserName(String(accounts[0]?.username));
     console.log("Is Name :", name);
-    return <p>Welcome, {name}</p>;
+    return (
+      <p className="py-2 px-2 text-xl hover:border-b-2 hover:outline-gray-50">
+        {name}
+      </p>
+    );
   }
 
-  function Feed() {
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  function Jobs() {
     return (
       <li>
         <AuthenticatedTemplate>
-          <Link href="/feed">Add Post</Link>
+          <Link
+            href="/jobs"
+            className="px-2 hover:border-b-2 hover:pb-2 hover:outline-gray-50 "
+          >
+            Jobs
+          </Link>
         </AuthenticatedTemplate>
       </li>
     );
@@ -44,69 +58,100 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className="border-b-2 bg-gray-100 shadow-md ">
-        <nav className="mx-10 flex h-16 flex-row items-center justify-between text-lg text-gray-700">
-          <div className="basis-1/5">
-            <h1 className="text-2xl font-bold tracking-wide antialiased">
+      <div className=" bg-slate-900 shadow-2xl shadow-slate-500 ">
+        <nav className="mx-14 flex h-20 flex-row items-center justify-between text-xl text-gray-50">
+          <div className="flex basis-1/5 items-center gap-1">
+            <Image
+              src={lancerImage as StaticImageData}
+              alt="Lancer's View Logo"
+              width={28}
+              height={28}
+            />
+            <h1 className="text-3xl font-medium uppercase">
               <Link href="/">Lancer&apos;s View</Link>
             </h1>
           </div>
-          {/* This is serach bar */}
-          <div className="basis-1">
-            <input
-              type="text"
-              className="w-96 rounded-lg border-2 border-gray-300 px-2 py-1 text-center text-base"
-              placeholder="Search for a company, job title, or keyword"
-            />
-          </div>
-          <div className="basis-1/10 text-lg">
-            <ul className="flex gap-6">
+          <div className="basis-1/10 text-xl uppercase">
+            <ul className="flex items-center gap-3 font-light tracking-wide">
               <li>
-                <Link href="/aboutus">About</Link>
+                <Link
+                  href="/aboutus"
+                  className="px-2 hover:border-b-2 hover:pb-2 hover:outline-gray-50 "
+                >
+                  About
+                </Link>
               </li>
               <li>
                 <AuthenticatedTemplate>
-                  <Link href="/feed">Add Post</Link>
-                </AuthenticatedTemplate>
-              </li>
-              {/* <li>
-                <Link href="/company">Companies</Link>
-              </li> */}
-              <li className="flex gap-6">
-                <AuthenticatedTemplate>
-                  <WelcomeUser name={name} />
-                  {/* <SignOutButton /> */}
-                  <button
-                    type="button"
-                    onClick={() => signOutClickHandler(instance)}
-                    className="flex gap-2 hover:text-red-400"
+                  <Link
+                    href="/feed"
+                    className="px-2 hover:border-b-2 hover:pb-2 hover:outline-gray-50 "
                   >
-                    <p className="text-lg">Sign Out</p>
-                    <Avatar
-                      size={27}
-                      name={name}
-                      variant="beam"
-                      colors={[
-                        "#92A1C6",
-                        "#146A7C",
-                        "#F0AB3D",
-                        "#C271B4",
-                        "#C20D90",
-                      ]}
-                    />
-                  </button>
+                    Add Post
+                  </Link>
                 </AuthenticatedTemplate>
+              </li>
+              <Jobs />
+              <li>
                 <UnauthenticatedTemplate>
-                  {/* <SignINButton /> */}
                   <button
                     type="button"
                     onClick={() => signInClickHandler(instance)}
-                    className="flex gap-2 hover:text-green-600"
+                    className="px-2 text-xl font-light uppercase tracking-wide hover:border-b-2 hover:pb-2 hover:outline-gray-50 "
                   >
-                    <p className="text-lg">Sign In</p>
-                    <FaRegUserCircle size={26} />
+                    Sign In
                   </button>
                 </UnauthenticatedTemplate>
+                <AuthenticatedTemplate>
+                  <div className="flex items-center gap-3">
+                    <WelcomeUser name={name} />
+                    <Menu as="div" className="relative">
+                      <div>
+                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                          <span className="sr-only">Open user menu</span>
+                          <Avatar
+                            size={27}
+                            name={name}
+                            variant="beam"
+                            colors={[
+                              "#92A1C6",
+                              "#146A7C",
+                              "#F0AB3D",
+                              "#C271B4",
+                              "#C20D90",
+                            ]}
+                          />
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="#"
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                                onClick={() => signOutClickHandler(instance)}
+                              >
+                                Sign out
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                  </div>
+                </AuthenticatedTemplate>
               </li>
             </ul>
           </div>

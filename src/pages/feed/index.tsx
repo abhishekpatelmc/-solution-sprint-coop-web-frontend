@@ -23,6 +23,7 @@ import { msalConfig } from "../../authConfig";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import type { TabsProps } from "antd";
+import Footer from "../components/Footer";
 
 const { Option } = Select;
 
@@ -41,7 +42,18 @@ const Feed = () => {
   const [selectedField, setSelectedField] = useState<string>("");
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
 
-  const allFields: string[] = ['Computer Science', 'Data Analytics', 'Finance', 'Accounting', 'Mechanical', 'Civil', 'Education', 'Biology', 'Electronics', 'Psycology']
+  const allFields: string[] = [
+    "Computer Science",
+    "Data Analytics",
+    "Finance",
+    "Accounting",
+    "Mechanical",
+    "Civil",
+    "Education",
+    "Biology",
+    "Electronics",
+    "Psycology",
+  ];
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
@@ -175,7 +187,7 @@ const Feed = () => {
 
   const handleField = (value: string) => {
     setSelectedField(value);
-  }
+  };
 
   const items: TabsProps["items"] = [
     {
@@ -452,10 +464,10 @@ const Feed = () => {
   };
 
   return (
-    <div className="h-screen bg-[url('../../public/images/back.svg')] bg-cover bg-center bg-no-repeat">
+    <div className="min-h-screen bg-slate-200 bg-cover bg-center">
       <Navbar />
       <div>
-        <Row justify="center" style={{ marginTop: "50px" }}>
+        <Row justify="center" style={{ marginTop: "50px", marginBottom: "50px" }}>
           <Col xs={24} sm={24} md={16} lg={14} xl={12}>
             <Tabs
               defaultActiveKey="1"
@@ -472,6 +484,7 @@ const Feed = () => {
         </Row>
         <div className="form-container"></div>
       </div>
+      <Footer />
     </div>
   );
 };
