@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { signInClickHandler } from "../api/auth/auth";
 import { useMsal } from "@azure/msal-react";
 import { useRouter } from "next/router";
+import PaginationButtons from "../components/PaginationButtons";
 
 const Index = () => {
   /* Main API data states*/
@@ -43,6 +44,33 @@ const Index = () => {
   const msalInstance = new PublicClientApplication(msalConfig);
   const accounts = msalInstance.getAllAccounts();
   const { instance } = useMsal();
+  
+  /* Pagination */
+  const [itemInterviewOffset, setInterviewItemOffset] = useState<number>(0);
+  const [itemCritiqueOffset, setCritiqueItemOffset] = useState<number>(0);
+
+  const itemsPerPage = 5;
+
+  const handleInterviewPageClick = (event: { selected: number; }): number => {
+    const newOffset = (event.selected * itemsPerPage) % interviews.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setInterviewItemOffset(newOffset);
+    return 1;
+  };
+
+  const handleCritiquePageClick = (event: { selected: number; }): number => {
+    const newOffset = (event.selected * itemsPerPage) % critiques.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setCritiqueItemOffset(newOffset);
+    return 1;
+  };
+
+  const pageInterviewCount = Math.ceil(interviews.length / itemsPerPage);
+  const pageCritiqueCount = Math.ceil(critiques.length / itemsPerPage);
 
   useEffect(() => {
     async function fetchData() {
@@ -289,12 +317,13 @@ const Index = () => {
             </div>
             {/* Inner div with options */}
             {/* Conditional render */}
+      
             { interviewClicked ? 
             interviews
             .filter((filtered) => {
               return jobFieldFilter ? filtered.job_field === jobFieldFilter: filtered && filtered.job_title.toLowerCase().includes(searchQuery) 
-              
             })
+            .slice(itemInterviewOffset, itemInterviewOffset + itemsPerPage)
             .map((interview) => (
               <div
                 key={interview._id}
@@ -402,13 +431,14 @@ const Index = () => {
                     {/* <p>{option.dislike}</p> */}
                   </div>
                 </div>
-              </div>
+              </div>           
             )) 
             : 
             //Second condition to render critiques
             critiques
             .filter((filtered) =>
                 filtered.job_title.toLowerCase().includes(searchQuery))
+            .slice(itemCritiqueOffset, itemCritiqueOffset + itemsPerPage)
             .map((critique) => (
               <div
                 key={critique._id}
@@ -489,7 +519,10 @@ const Index = () => {
                 </div>
               </div>
             ))}
-            {}
+            { interviewClicked ? 
+              <PaginationButtons handlePageClick={handleInterviewPageClick} pageCount={pageInterviewCount} /> 
+              :
+              <PaginationButtons handlePageClick={handleCritiquePageClick} pageCount={pageCritiqueCount} /> }
           </div>
           {/* Right div */}
         </div>
