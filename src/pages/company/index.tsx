@@ -149,7 +149,7 @@ const Index = () => {
     }
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchData();
-  }, [companyId, accounts, instance, router]);
+  }, [companyId, instance, router, accounts]);
 
   if (
     isLoadingCompany ||
