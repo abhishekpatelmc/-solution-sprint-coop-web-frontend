@@ -20,7 +20,7 @@ const paginationVariants = {
   },
 };
 
-const PaginationButtons = (props: {handlePageClick: any,  pageCount:number}) => {
+const PaginationButtons = (props: {handlePageClick: (event: {selected: number;}) => number; pageCount: number }) => {
   return (
     <motion.div
       variants={paginationVariants}
@@ -34,7 +34,7 @@ const PaginationButtons = (props: {handlePageClick: any,  pageCount:number}) => 
               <BsChevronRight />
             </span>
         }
-        onPageChange={props.handlePageClick}
+        onPageChange={() => props.handlePageClick}
         pageRangeDisplayed={3}
         pageCount={props.pageCount}
         previousLabel={

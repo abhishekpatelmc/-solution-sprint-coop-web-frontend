@@ -17,12 +17,13 @@ const Home: NextPage = () => {
 
   const itemsPerPage = 5;
 
-  const handlePageClick = (event: { selected: number; }) => {
+  const handlePageClick = (event: { selected: number; }): number => {
     const newOffset = (event.selected * itemsPerPage) % topCompanies.length;
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
     setItemOffset(newOffset);
+    return 1;
   };
 
   const pageCount = Math.ceil(topCompanies.length / itemsPerPage);
