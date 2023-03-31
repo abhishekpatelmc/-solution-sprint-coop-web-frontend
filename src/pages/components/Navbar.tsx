@@ -46,7 +46,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className=" bg-cyan-900 shadow-2xl shadow-slate-500 ">
+      <div className=" bg-slate-900 shadow-2xl shadow-slate-500 ">
         <nav className="mx-14 flex h-20 flex-row items-center justify-between text-xl text-gray-50">
           <div className="flex basis-1/5 items-center gap-1">
             <Image
