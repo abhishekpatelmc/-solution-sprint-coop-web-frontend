@@ -34,7 +34,7 @@ const PaginationButtons = (props: {handlePageClick: (event: {selected: number;})
               <BsChevronRight />
             </span>
         }
-        onPageChange={() => props.handlePageClick}
+        onPageChange={props.handlePageClick}
         pageRangeDisplayed={3}
         pageCount={props.pageCount}
         previousLabel={
