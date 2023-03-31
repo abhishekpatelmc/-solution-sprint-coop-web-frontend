@@ -275,7 +275,7 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="align-center mt-5 flex-col justify-center space-y-4 rounded-xl bg-gray-50 p-4 shadow-xl shadow-slate-300 ">
+            <div className="align-center mt-5 flex-col justify-center space-y-4 rounded-xl bg-gray-50 p-4 shadow-xl shadow-slate-300 mb-5">
               <div className="text-primary mt-0 mb-1 text-center text-2xl font-semibold leading-tight">
                 Current Openings
               </div>
