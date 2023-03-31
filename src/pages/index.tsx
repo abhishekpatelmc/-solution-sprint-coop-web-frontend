@@ -6,41 +6,28 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import bannerImg from "../../public/getHired.png";
 import type { Company } from "../types";
-import ReactPaginate from "react-paginate";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { motion } from "framer-motion";
+import PaginationButtons from "./components/PaginationButtons";
 
 const Home: NextPage = () => {
   const [allCompanies, setAllCompanies] = useState<Company[]>([]);
   const [topCompanies, setTopCompanies] = useState<Company[]>([]);
-  const [itemOffset, setItemOffset] = useState(0);
+  const [itemOffset, setItemOffset] = useState<number>(0);
 
   const [query, setQuery] = useState<string>("");
 
+  const itemsPerPage: number = 5;
+
   const handlePageClick = (event: { selected: number; }) => {
-    const newOffset = (event.selected * 5) % topCompanies.length;
+    const newOffset = (event.selected * itemsPerPage) % topCompanies.length;
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
     setItemOffset(newOffset);
   };
 
-  const paginationVariants = {
-    hidden: {
-      opacity: 0,
-      y: 200,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-        duration: 2,
-      },
-    },
-  };
+  const pageCount = Math.ceil(topCompanies.length / itemsPerPage);
+  console.log(`Pagecount is ${pageCount}`)
+
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_BACKEND_URL !== undefined) {
@@ -119,7 +106,7 @@ const Home: NextPage = () => {
               .filter((filtered) =>
                 filtered.company_name.toLowerCase().includes(query)
               )
-              .slice()
+              .slice(itemOffset, itemOffset + itemsPerPage)
               .map((comp) => (
                 <div key={comp._id} className="flex flex-col justify-center">
                   <Link
@@ -206,31 +193,7 @@ const Home: NextPage = () => {
                 </div>
               ))}
           </div>
-          <motion.div
-            variants={paginationVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <ReactPaginate
-              breakLabel={<span className="mr-4">...</span>}
-              nextLabel={
-                  <span className="w-10 h-10 flex items-center justify-center bg-lightGray rounded-md">
-                    <BsChevronRight />
-                  </span>
-              }
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={3}
-              pageCount={10}
-              previousLabel={
-                  <span className="w-10 h-10 flex items-center justify-center bg-lightGray rounded-md mr-4">
-                    <BsChevronLeft />
-                  </span>
-              }
-              containerClassName="flex items-center justify-center mt-8 mb-4"
-              pageClassName="block border- border-solid border-lightGray hover:bg-lightGray w-10 h-10 flex items-center justify-center rounded-md mr-4"
-              activeClassName="bg-purple text-white"
-            />
-          </motion.div>
+          <PaginationButtons handlePageClick={handlePageClick} pageCount={pageCount} />
         </div>
       </main>
     </div>
