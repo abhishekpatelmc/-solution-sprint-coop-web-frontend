@@ -292,8 +292,8 @@ const Index = () => {
             { interviewClicked ? 
             interviews
             .filter((filtered) => {
-              return filtered.job_title.toLowerCase().includes(searchQuery) 
-              && jobFieldFilter ? filtered.job_field === jobFieldFilter: filtered
+              return jobFieldFilter ? filtered.job_field === jobFieldFilter: filtered && filtered.job_title.toLowerCase().includes(searchQuery) 
+              
             })
             .map((interview) => (
               <div
