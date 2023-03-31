@@ -68,7 +68,7 @@ const Index = () => {
   };
 
   return (
-    <div className="h-screen bg-[url('../../public/images/back.svg')] bg-cover bg-center bg-no-repeat">
+    <div className="min-h-screen bg-slate-200 bg-cover bg-center">
       <Navbar />
       <Layout>
         <Layout>

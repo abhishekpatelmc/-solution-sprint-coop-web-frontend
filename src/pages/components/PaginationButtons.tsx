@@ -44,7 +44,7 @@ const PaginationButtons = (props: {handlePageClick: (event: {selected: number;})
         }
         containerClassName="flex items-center justify-center mt-8 mb-4"
         pageClassName="block border- border-solid border-lightGray hover:bg-lightGray w-10 h-10 flex items-center justify-center rounded-md mr-4"
-        activeClassName="bg-purple text-white"
+        activeClassName="bg-purple text-slate-100"
       />
     </motion.div>
   )
