@@ -2,6 +2,9 @@
 
 Lancer's View is a review website for the University of Windsor students and alumni to share their experiences and perspectives about companies and interview insights. The website allows users to search for companies and read reviews from other students and alumni, and also to write their own reviews to help future students and alumni make informed decisions about their career paths.
 
+## Backend Repo 
+- [LancersView-Backend](https://github.com/kevinPJdev/solution-sprint-coop-web-backend.git)
+
 ## Features
 
 - Search function to easily find companies and reviews
