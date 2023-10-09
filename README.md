@@ -24,6 +24,11 @@ Lancer's View is a review website for the University of Windsor students and alu
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
+## Demo
+[Check the website here](https://lancersview.vercel.app/)
+
+<img src="./Lancer-view frontend.png" alt="alt text" title="image Title" width="800"/>
+
 ## Our valuable Contributors👩‍💻👨‍💻 :
 <a href="https://github.com/abhishekpatelmc/LancersView-frontend/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=abhishekpatelmc/LancersView-frontend" />
