@@ -23,7 +23,6 @@ Lancer's View is a review website for the University of Windsor students and alu
 - [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- 
 
 ## Our valuable Contributors👩‍💻👨‍💻 :
 <a href="https://github.com/abhishekpatelmc/LancersView-frontend/graphs/contributors">
