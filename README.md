@@ -5,7 +5,8 @@ Lancer's View is a review website for the University of Windsor students and alu
 ## Demo
 [Check the website here](https://lancersview.vercel.app/)
 
-<img src="./Lancer-view frontend.png" alt="alt text" title="image Title" width="800"/>
+<img src="./Lancer-view frontend.png" alt="alt text" title="LancerView Demo" width="800"/>
+<img src="./LancersView-Demo2.png" alt="alt text" title="LancerView Demo" width="800"/>
 
 ## Backend Repo 
 - [LancersView-Backend](https://github.com/kevinPJdev/solution-sprint-coop-web-backend.git)
